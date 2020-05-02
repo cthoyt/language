@@ -12,7 +12,13 @@ represent the abundances of the AKT1 gene, RNA, and protein, respectively.
 
 ### Genes
 
-`geneAbundance(ns:v)` or `g(ns:v)` denotes the abundance of the gene designated by the value v in the namespace ns. `geneAbundance()` terms are used to represent the DNA encoding the specified gene. `geneAbundance()` is considered decreased in the case of a homozygous or heterozygous gene deletion, and increased in the case of a DNA amplification mutation. Events in which a protein binds to the promoter of a gene can be represented using the `geneAbundance()` function.
+`geneAbundance(ns:v)` or `g(ns:v)` denotes the abundance of the gene designated
+by the value v in the namespace ns. `geneAbundance()` terms are used to
+represent the DNA encoding the specified gene. `geneAbundance()` is considered
+decreased in the case of a homozygous or heterozygous gene deletion, and
+increased in the case of a DNA amplification mutation. Events in which a
+protein binds to the promoter of a gene can be represented using the
+`geneAbundance()` function.
 
 #### Example - promoter binding event represented using geneAbundance
 
@@ -22,7 +28,10 @@ In the above example, the p53 protein binds the CDKN1A gene.
 
 ### RNAs
 
-`rnaAbundance(ns:v)` or `r(ns:v)` denotes the abundance of the RNA designated by the value v in the namespace +ns+, where +v+ references a gene. This function refers to all RNA designated by +ns:v+, regardless of splicing, editing, or polyadenylation stage.
+`rnaAbundance(ns:v)` or `r(ns:v)` denotes the abundance of the RNA designated
+by the value v in the namespace +ns+, where +v+ references a gene. This
+function refers to all RNA designated by +ns:v+, regardless of splicing,
+editing, or polyadenylation stage.
 
 #### Example - RNA abundance
 
@@ -32,7 +41,8 @@ r(HGNC:AKT1)
 
 ### Micro-RNAs
 
-`microRNAAbundance(ns:v)` or `m(ns:v)` denotes the abundance of the processed, functional microRNA designated by the value +v+ in the namespace +ns+.
+`microRNAAbundance(ns:v)` or `m(ns:v)` denotes the abundance of the processed,
+functional microRNA designated by the value +v+ in the namespace +ns+.
 
 #### Example - microRNA abundance
 
@@ -42,7 +52,9 @@ m(HGNC:MIR21)
 
 ### Proteins
 
-`proteinAbundance(ns:v)` or `p(ns:v)` denotes the abundance of the protein designated by the value +v+ in the namespace +ns+, where +v+ references a gene or a named protein family.
+`proteinAbundance(ns:v)` or `p(ns:v)` denotes the abundance of the protein
+designated by the value +v+ in the namespace +ns+, where +v+ references a
+gene or a named protein family.
 
 #### Example: protein
 
@@ -96,7 +108,13 @@ is generally used to identify abundances of named complexes.
 complex(SCOMP:"AP-1 Complex")
 ```
 
-`complexAbundance(<abundance term list>)` denotes the abundance of the molecular complex of members of the abundances denoted by `<abundance term list>`, a list of abundance terms supplied as arguments. The list is unordered, thus different orderings of the arguments should be interpreted as the same term. Members of a molecular complex retain their individual identities. The `complexAbundance()` function does not specify the duration or stability of the interaction of the members of the complex.
+`complexAbundance(<abundance term list>)` denotes the abundance of the
+molecular complex of members of the abundances denoted by
+`<abundance term list>`, a list of abundance terms supplied as arguments.
+The list is unordered, thus different orderings of the arguments should be
+interpreted as the same term. Members of a molecular complex retain their
+individual identities. The`complexAbundance()` function does not specify the
+duration or stability of the interaction of the members of the complex.
 
 #### Example - composed complex of proteins
 
@@ -156,7 +174,8 @@ p(HGNC:BMP4) -> complex(p(HGNC:MTOR), p(HGNC:STAT3))
 
 #### Example - transcription factor protein binding to DNA
 
-This statement expresses that STAT3 protein binds to the CCL11 gene DNA, and that this association is increased by IL17A.
+This statement expresses that STAT3 protein binds to the CCL11 gene DNA,
+and that this association is increased by IL17A.
 
 ```
 SET Citation = {"PubMed", "19265112"}
@@ -327,7 +346,8 @@ the sequence position of the modification.
 
 ###### Hydroxylation
 
-This term represents the abundance of human HIF1A protein hydroxylated at asparagine 803.
+This term represents the abundance of human HIF1A protein
+hydroxylated at asparagine 803.
 
 ```
 // long form
@@ -432,7 +452,11 @@ p(HGNC:CFTR, var("p.Phe508del"))
 p(REF:"NP_000483.3", var("p.Phe508del"))
 ```
 
-CFTR ΔF508 variant (HGVS __NP_000483.3:p.Phe508del__). Because a specific position is referenced, a namespace value for a non-ambiguous sequence like the http://www.ncbi.nlm.nih.gov/refseq/about/[RefSeq] ID in the lower example is preferred over the HGNC gene symbol. The __p.__ within the `var("")` expression indicates that the numbering is based on a protein reference sequence.
+CFTR ΔF508 variant (HGVS __NP_000483.3:p.Phe508del__). Because a specific
+position is referenced, a namespace value for a non-ambiguous sequence like
+the RefSeq ID in the lower example is preferred over the HGNC gene symbol.
+The __p.__ within the `var("")` expression indicates that the numbering is
+based on a protein reference sequence.
 
 ###### frameshift
 
@@ -441,12 +465,18 @@ p(HGNC:CFTR, var("p.Thr1220Lysfs"))
 p(REF:"NP_000483.3", var("p.Thr1220Lysfs"))
 ```
 
-CFTR frameshift variant __(__HGVS__ NP_000483.3:p.Thr1220Lysfs*7). __Because a specific position is referenced, a namespace value for a non-ambiguous sequence like the http://www.ncbi.nlm.nih.gov/refseq/about/[RefSeq] ID in the lower example is preferred over the HGNC gene symbol. The __p.__ within the `var("")` expression indicates that the numbering is based on a protein reference sequence.
+CFTR frameshift variant __(__HGVS__ NP_000483.3:p.Thr1220Lysfs*7). __Because a
+specific position is referenced, a namespace value for a non-ambiguous sequence
+RefSeq ID in the lower example is preferred over the HGNC gene symbol. The
+__p.__ within the `var("")` expression indicates that the numbering is based on
+a protein reference sequence.
 
 
 ##### Variant (Mutant) Protein Examples
 
-The abundances of mutated and variant proteins can be represented in BEL using the abundance modifier function `variant("")` and the other function `fusion()`.
+The abundances of mutated and variant proteins can be represented in BEL using
+the abundance modifier function `variant("")` and the other function
+`fusion()`.
 
 * Amino Acid Substitutions
 * Truncated Proteins
@@ -454,7 +484,9 @@ The abundances of mutated and variant proteins can be represented in BEL using t
 
 ###### Amino Acid Substitutions
 
-The abundances of proteins with amino acid sequence variations, such as those resulting from missense mutations or polymorphisms can be specified by using the `variant("")` or `var("")` function within a protein abundance term.
+The abundances of proteins with amino acid sequence variations, such as those
+resulting from missense mutations or polymorphisms can be specified by using
+the `variant("")` or `var("")` function within a protein abundance term.
 
 #### Example
 
@@ -468,11 +500,14 @@ p(HGNC:PIK3CA, variant("p.Glu545Lys"))
 p(HGNC:PIK3CA, var("p.Glu545Lys"))
 ```
 
-This term represents the abundance of the human PIK3CA protein in which the glutamic acid residue at position 545 has been substituted with a lysine.
+This term represents the abundance of the human PIK3CA protein in which the
+glutamic acid residue at position 545 has been substituted with a lysine.
 
 ###### Truncated Proteins
 
-The abundances of proteins that are truncated by the introduction of a stop codon can be specified by using the `variant("")` or `var("")` function within a protein abundance term.
+The abundances of proteins that are truncated by the introduction of a stop
+codon can be specified by using the `variant("")` or `var("")` function within
+a protein abundance term.
 
 #### Example
 
@@ -484,7 +519,8 @@ p(HGNC:ABCA1, variant("p.Arg1851*"))
 p(HGNC:ABCA1, var("p.Arg1851*"))
 ```
 
-This term represents the abundance of human ABCA1 protein that has been truncated by substitution of Arginine 1851 with a stop codon.
+This term represents the abundance of human ABCA1 protein that has been
+truncated by substitution of Arginine 1851 with a stop codon.
 
 ##### DNA (gene) examples
 
@@ -509,7 +545,13 @@ g(HGNC:CFTR, var("c.1521_1523delCTT"))
 g(REF:"NM_000492.3", var("c.1521_1523delCTT"))
 ```
 
-Because a specific position is referenced, a namespace value for a non-ambiguous sequence like the http://www.ncbi.nlm.nih.gov/refseq/about/[RefSeq] ID in the lower example is preferred over the HGNC gene symbol. The __c.__ within the `var("")` expression indicates that the numbering is based on a coding DNA reference sequence.The coding DNA reference sequence covers the part of the transcript that is translated into protein; numbering starts at the A of the initiating ATG codon, and ends at the last nucleotide of the translation stop codon.
+Because a specific position is referenced, a namespace value for a
+non-ambiguous sequence like the RefSeq ID in the lower example is preferred
+over the HGNC gene symbol. The __c.__ within the `var("")` expression indicates
+that the numbering is based on a coding DNA reference sequence.The coding DNA
+reference sequence covers the part of the transcript that is translated into
+protein; numbering starts at the A of the initiating ATG codon, and ends at the
+last nucleotide of the translation stop codon.
 
 ##### RNA examples
 
@@ -522,7 +564,13 @@ r(HGNC:CFTR, var("c.1521_1523delCTT"))
 r(REF:"NM_000492.3", var("c.1521_1523delCTT"))
 ```
 
-Because a specific position is referenced, a namespace value for a non-ambiguous sequence like the http://www.ncbi.nlm.nih.gov/refseq/about/[RefSeq] ID in the lower example is preferred over the HGNC gene symbol. The __c.__ within the `var("")` expression indicates that the numbering is based on a coding DNA reference sequence. The coding DNA reference sequence covers the part of the transcript that is translated into protein; numbering starts at the A of the initiating ATG codon, and ends at the last nucleotide of the translation stop codon.
+Because a specific position is referenced, a namespace value for a
+non-ambiguous sequence like the RefSeq ID in the lower example is preferred
+over the HGNC gene symbol. The __c.__ within the `var("")` expression indicates
+that the numbering is based on a coding DNA reference sequence. The coding DNA
+reference sequence covers the part of the transcript that is translated into
+protein; numbering starts at the A of the initiating ATG codon, and ends at the
+last nucleotide of the translation stop codon.
 
 ##### RNA reference sequence
 
@@ -559,26 +607,22 @@ For these examples, __HGNC:YFG__ is ‘your favorite gene’. For the first four
 examples, only the `<range>` argument is used. The last examples include use of
 the optional `<descriptor>`.
 
-###### fragment with known start/stop
-
+```
+// fragment with known start/stop
 p(HGNC:YFG, frag("5_20"))
 
-###### amino-terminal fragment of unknown length
-
+// amino-terminal fragment of unknown length
 p(HGNC:YFG, frag("1_?"))
 
-###### carboxyl-terminal fragment of unknown length
-
+// carboxyl-terminal fragment of unknown length
 p(HGNC:YFG, frag("?_*"))
 
-###### fragment with unknown start/stop
-
+// fragment with unknown start/stop
 p(HGNC:YFG, frag("?"))
 
-###### fragment with unknown start/stop and a descriptor
-
+// fragment with unknown start/stop and a descriptor
 p(HGNC:YFG, frag("?", "55kD"))
-
+```
 
 #### Cellular location
 
@@ -618,8 +662,8 @@ The following BEL Functions represent classes of events or phenomena taking plac
 ### Examples
 
 ```
- bp(GO:"cell cycle arrest")
- bp(GO:angiogenesis)
+bp(GO:"cell cycle arrest")
+bp(GO:angiogenesis)
 ```
 
 #### Pathologies
@@ -665,12 +709,11 @@ bp(GO:"cellular senescence")
 ###### Diseases and Pathologies
 
 Disease pathologies like muscle hypotonia can be represented by:
-
-###### Long Form
-
 ```
+// long form
 pathology(MESH:"Muscle Hypotonia")
 
+// short form
 path(MESH:"Muscle Hypotonia")
 ```
 
@@ -719,8 +762,6 @@ The `reaction()` or `rxn()` function expresses the transformation of products in
 This BEL Term represents the reaction in which the reactants
 phosphoenolpyruvate and ADP are converted into pyruvate and ATP.
 
-###### Long Form
-
 ```
 // long form
 reaction(reactants(abundance(CHEBI:phosphoenolpyruvate), abundance(CHEBI:ADP)), products(abundance(CHEBI:pyruvate), abundance(CHEBI:ATP)))
@@ -757,17 +798,19 @@ The abundances of fusion proteins resulting from chromosomal translocation mutat
 
 #### Example
 
-###### Long Form
+```
+// long form
+p(fusion(HGNC:BCR, "p.1_426", HGNC:JAK2, "p.812_1132"))
 
- proteinAbundance(fusion(HGNC:BCR, "p.1_426", HGNC:JAK2, "p.812_1132"))
-
-###### Short Form
-
+// short form
 p(fus(HGNC:BCR, "p.1_426", HGNC:JAK2, "p.812_1132"))
+```
 
 This term represents the abundance of a fusion protein of the 5' partner BCR and 3' partner JAK2, with the breakpoint for BCR at amino acid 426 and JAK2 at 812. _p._ indicates that the protein sequence is used for the range coordinates provided. If the breakpoint is not specified, the fusion protein abundance can be represented as:
 
+```
 p(fus(HGNC:BCR, "?", HGNC:JAK2, "?"))
+```
 
 The `fusion()` function can also be used within `geneAbundance` and `rnaAbundance` terms to represent genes and RNAs modified by fusion mutations.
 
@@ -776,84 +819,99 @@ The `fusion()` function can also be used within `geneAbundance` and `rnaAbundanc
 Measurable entities like genes, RNAs, proteins, and small molecules are represented as abundances in BEL. BEL Terms for abundances have the general form `a(ns:v)`, where `a` is an abundance function, `ns` is `a` namespace reference and `v` is a value from the namespace vocabulary. See Namespaces Used in Examples.
 
 * Chemicals and Small Molecules
-* Xgenesrnasproteins, Genes, RNAs, and proteins
+* Genes, RNAs, microRNAs, and Proteins
 * Protein families
-* microRNAs
 * Complexes
 * Composite abundances
 
 ###### Chemicals and Small Molecules
 
-The general abundance function `Xabundancea, abundance()` is used to represent abundances of chemicals, small molecules, and any other entities that cannot be represented by a more specific abundance function.
+The general abundance function `abundance()` is used to represent abundances
+of chemicals, small molecules, and any other entities that cannot be
+represented by a more specific abundance function.
 
 #### Examples
 
 ###### Long Form
 
- abundance(CHEBI:"nitrogen atom")
- abundance(CHEBI:"prostaglandin J2")
+```
+// long forms
+abundance(CHEBI:"nitrogen atom")
+abundance(CHEBI:"prostaglandin J2")
 
-###### Short Form
+// short forms
+a(CHEBI:"nitrogen atom")
+a(CHEBI:"prostaglandin J2")
+```
 
- a(CHEBI:"nitrogen atom")
- a(CHEBI:"prostaglandin J2")
-
-These BEL Terms represent the abundance of the entities specified by _nitrogen atom_ and by _prostaglandin J2_ in the CHEBI namespace.
+These BEL Terms represent the abundance of the entities specified by
+_nitrogen atom_ and by _prostaglandin J2_ in the CHEBI namespace.
 
 ###### Genes, RNAs, and Proteins
 
-The abundance functions `XgeneA, geneAbundance()`, `XrnaA, rnaAbundance()`, and `XproteinA, proteinAbundance()` are used with namespace values like HGNC human gene symbols, EntrezGene IDs, SwissProt accession numbers to designate the type of molecule represented.
+The abundance functions `geneAbundance()`, `rnaAbundance()`, and
+`proteinAbundance()` are used with namespace values like HGNC human gene
+symbols, EntrezGene IDs, SwissProt accession numbers to designate the type of
+molecule represented.
 
 #### Examples
 
-Abundances of the gene, RNA, and protein encoded by the human AKT1 gene are represented as:
+Abundances of the gene, RNA, and protein encoded by the human AKT1 gene are
+represented as:
 
-###### Long Form
+```
+// long forms
+geneAbundance(HGNC:AKT1)
+rnaAbundance(HGNC:AKT1)
+proteinAbundance(HGNC:AKT1)
 
- geneAbundance(HGNC:AKT1)
- rnaAbundance(HGNC:AKT1)
- proteinAbundance(HGNC:AKT1)
-
-###### Short Form
-
+// short forms
 g(HGNC:AKT1)
 r(HGNC:AKT1)
 p(HGNC:AKT1)
+```
 
-These BEL Terms represent the gene, RNA, and protein abundances of the entity specified by _AKT1_ in the HGNC namespace. Equivalent terms can be constructed using a corresponding value from a different namespace. For example, the abundance of the human AKT1 RNA can also be represented by referencing the EntrezGene ID or SwissProt accession namespaces:
+These BEL Terms represent the gene, RNA, and protein abundances of the entity
+specified by _AKT1_ in the HGNC namespace. Equivalent terms can be constructed
+using a corresponding value from a different namespace. For example, the
+abundance of the human AKT1 RNA can also be represented by referencing the
+EntrezGene ID or SwissProt accession namespaces:
 
-r(EGID:207)
-r(SP:P31749)
-
+```
+r(NCBIGENE:207)
+r(UNIPROT:P31749)
+```
 ###### Protein families
 
-Protein families are used to represent a group of functionally similar proteins. For example, AKT1, AKT2, and AKT3 together form the AKT family. Like other proteins, abundances of protein families are represented using the `XproteinA, proteinAbundance()` function, with namespace values from the Selventa named protein families namespace.
+Protein families are used to represent a group of functionally similar
+proteins. For example, AKT1, AKT2, and AKT3 together form the AKT family. Like
+other proteins, abundances of protein families are represented using the
+`proteinAbundance()` function, with namespace values from the Selventa named
+protein families namespace.
 
 #### Example
 
 This term represents the protein abundance of the AKT protein family.
 
+```
 p(SFAM:"AKT Family")
+```
 
 ###### microRNAs
 
-The abundance function `XmicroRNAA, microRNAAbundance()` is used to represent the fully processed, active form of a microRNA. The specific abundance functions allow distinct representations of the gene, RNA, and microRNA abundances for a given namespace value.
+The abundance function `microRNAAbundance()` is used to represent the fully processed, active form of a microRNA. The specific abundance functions allow distinct representations of the gene, RNA, and microRNA abundances for a given namespace value.
 
 #### Example
 
 These BEL Terms represent the abundances of the gene, RNA, and processed microRNA, respectively, for the entity specified by _Mir21_ in the MGI mouse gene symbol namespace.
 
-###### Long Form
-
 ```
+// long forms
 geneAbundance(MGI:Mir21)
 rnaAbundance(MGI:Mir21)
 microRNAAbundance(MGI:Mir21)
-```
 
-###### Short Form
-
-```
+// short forms
 g(MGI:Mir21)
 r(MGI:Mir21)
 m(MGI:Mir21)
@@ -861,7 +919,7 @@ m(MGI:Mir21)
 
 ###### Complexes
 
-The abundances of molecular complexes are represented using the `XcomplexA, complexAbundance()` function. This function can take either a list of abundance terms or a value from a namespace of molecular complexes as its argument.
+The abundances of molecular complexes are represented using the `complexAbundance()` function. This function can take either a list of abundance terms or a value from a namespace of molecular complexes as its argument.
 
 #### Example
 
@@ -871,6 +929,7 @@ a named protein complex within the [GO namespace](http://geneontology.org/page/c
 ```
 // long form
 complexAbundance(GO:"IkappaB kinase complex")
+
 // short form
 complex(GO:"IkappaB kinase complex")
 ```
@@ -881,6 +940,7 @@ its member proteins: CHUK, IKBKB, and IKBKG.
 ```
 // long form
 complexAbundance(proteinAbundance(HGNC:CHUK), proteinAbundance(HGNC:IKBKB), proteinAbundance(HGNC:IKBKG))
+
 // short form
 complex(p(HGNC:CHUK), p(HGNC:IKBKB), p(HGNC:IKBKG))
 ```
