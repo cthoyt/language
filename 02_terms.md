@@ -10,57 +10,57 @@ specify the type of entity referred to by a namespace value. For example,
 `geneAbundance(HGNC:AKT1)`, `rnaAbundance(HGNC:AKT1)`, and `proteinAbundance(HGNC:AKT1)`,
 represent the abundances of the AKT1 gene, RNA, and protein, respectively.
 
-## Genes
+### Genes
 
 `geneAbundance(ns:v)` or `g(ns:v)` denotes the abundance of the gene designated by the value v in the namespace ns. `geneAbundance()` terms are used to represent the DNA encoding the specified gene. `geneAbundance()` is considered decreased in the case of a homozygous or heterozygous gene deletion, and increased in the case of a DNA amplification mutation. Events in which a protein binds to the promoter of a gene can be represented using the `geneAbundance()` function.
 
-### Example - promoter binding event represented using geneAbundance
+#### Example - promoter binding event represented using geneAbundance
 
  complex(p(HGNC:TP53), g(HGNC:CDKN1A))
 
 In the above example, the p53 protein binds the CDKN1A gene.
 
-## RNAs
+### RNAs
 
 `rnaAbundance(ns:v)` or `r(ns:v)` denotes the abundance of the RNA designated by the value v in the namespace +ns+, where +v+ references a gene. This function refers to all RNA designated by +ns:v+, regardless of splicing, editing, or polyadenylation stage.
 
-### Example - RNA abundance
+#### Example - RNA abundance
 
 ```
 r(HGNC:AKT1)
 ```
 
-## Micro-RNAs
+### Micro-RNAs
 
 `microRNAAbundance(ns:v)` or `m(ns:v)` denotes the abundance of the processed, functional microRNA designated by the value +v+ in the namespace +ns+.
 
-### Example - microRNA abundance
+#### Example - microRNA abundance
 
 ```
 m(HGNC:MIR21)
 ```
 
-## Proteins
+### Proteins
 
 `proteinAbundance(ns:v)` or `p(ns:v)` denotes the abundance of the protein designated by the value +v+ in the namespace +ns+, where +v+ references a gene or a named protein family.
 
-### Example: protein
+#### Example: protein
 
 ```
 p(HGNC:AKT1)
 ```
 
-### Example: protein family
+#### Example: protein family
 
 ```
 p(SFAM:"AKT Family")
 ```
 
-## Populations
+### Populations
 
 Cells and Species
 
-## Other Physical Entities
+### Other Physical Entities
 
 `abundance(ns:v)` or `a(ns:v)` denotes the abundance of the entity designated
 by the value `v` in the namespace `ns`. abundance is a general abundance term
@@ -68,20 +68,20 @@ that can be used for chemicals or other molecules not defined by a more
 specific abundance function. Gene, RNA, protein, and microRNA abundances should
 be represented using the appropriate specific abundance function.
 
-### Example - drugs
+#### Example - drugs
 
-### Examples - small molecule and chemical
+#### Examples - small molecule and chemical
 
 ```
 a(CHEBI:"oxygen atom")
 a(CHEBI:thapsigargin)
 ```
 
-### Example - cellular structure
+#### Example - cellular structure
 
-### Example - cells
+#### Example - cells
 
-## Complexes of Physical Entities
+### Complexes of Physical Entities
 
 The `complexAbundance()` or `complex()` function can be used with either a
 namespace value or with a list of abundance terms.
@@ -90,7 +90,7 @@ namespace value or with a list of abundance terms.
 molecular complex designated by the value `v` in the namespace `ns`. This form
 is generally used to identify abundances of named complexes.
 
-### Example - named complex
+#### Example - named complex
 
 ```
 complex(SCOMP:"AP-1 Complex")
@@ -98,21 +98,21 @@ complex(SCOMP:"AP-1 Complex")
 
 `complexAbundance(<abundance term list>)` denotes the abundance of the molecular complex of members of the abundances denoted by `<abundance term list>`, a list of abundance terms supplied as arguments. The list is unordered, thus different orderings of the arguments should be interpreted as the same term. Members of a molecular complex retain their individual identities. The `complexAbundance()` function does not specify the duration or stability of the interaction of the members of the complex.
 
-### Example - composed complex of proteins
+#### Example - composed complex of proteins
 
 ```
 complex(p(HGNC:FOS), p(HGNC:JUN))
 ```
 
-### Example - composed complex of protein and ligand
+#### Example - composed complex of protein and ligand
 
-### Example - composed complex of virus and receptor
+#### Example - composed complex of virus and receptor
 
 TODO
 
-### Example - composed complex of two cell types
+#### Example - composed complex of two cell types
 
-### Example - Binding Interaction
+#### Example - Binding Interaction
 
 The `complexAbundance()` function can be used to specify molecular interactions
 between abundances. This function can take either a list of abundances that
@@ -126,7 +126,7 @@ protein-protein, protein-chemical, and protein-DNA interactions.
 * Protein – small molecule interactions
 
 
-### Example - protein-protein interaction as BEL statement
+#### Example - protein-protein interaction as BEL statement
 
 This statement represents that MTOR and AKT1S1 proteins physically interact.
 Note that this statement has only an object term and no subject term and
@@ -136,7 +136,7 @@ relationship.
 SET Citation = {"PubMed", "17277771"}
 SET Support = "Here, we identify PRAS40 (proline-rich Akt/PKB substrate 40 kDa) as a novel mTOR binding partner"
 // disambiguation PRAS40 = HGNC AKT1S1
-complex(p(HGNC:AKT1S1), p(HGNC:MTOR))```
+complex(p(HGNC:AKT1S1), p(HGNC:MTOR))
 ```
 
 #### Example - protein-protein interaction as Statement object
@@ -770,9 +770,6 @@ This term represents the abundance of a fusion protein of the 5' partner BCR and
 p(fus(HGNC:BCR, "?", HGNC:JAK2, "?"))
 
 The `fusion()` function can also be used within `geneAbundance` and `rnaAbundance` terms to represent genes and RNAs modified by fusion mutations.
-
-
-
 
 ## Examples
 
