@@ -1,10 +1,4 @@
-# Examples in BEL Script
-
-
-    *   <<Causal Statement Examples>>
-    *   <<Correlative Statement Examples>>
-    *   <<Direct Causal Statement Examples>>
-    *   <<Nested Statement Example>>
+# BEL Script
 
 ##### Causal Statement Examples
 

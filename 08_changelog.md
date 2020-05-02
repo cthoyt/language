@@ -1,3 +1,5 @@
+# Changelog
+
 ## Summary of Changes for BEL v2.2
 
 See https://medium.com/bel-news/bel-v2-2-enhancements-cfb4b27b22cb

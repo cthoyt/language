@@ -1,4 +1,4 @@
-# BEL v2.2 Tutorial Overview
+# BEL v2.2 Tutorial
 
 1. [Overview](01_overview.md)
 2. [Terms](02_terms.md)

@@ -1,4 +1,4 @@
-# Overview
+# Preamble
 
 Knowledge in BEL is expressed as BEL Statements. Generally, BEL Statements have
 the form of a __subject__ - __predicate__ - __object__ triple, where the

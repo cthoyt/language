@@ -1,4 +1,4 @@
-# Statments
+# BEL Statements
 
 ## Edge Modifiers
 

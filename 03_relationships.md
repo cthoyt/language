@@ -1,4 +1,4 @@
-## BEL Relationships
+# BEL Relationships
 
 The following BEL Relationship types are included in the BEL v2.0 language specification:
 

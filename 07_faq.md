@@ -1,4 +1,4 @@
-# BEL Best Practices
+# Best Practices
 
 These pages contain suggestions and guidelines for representing scientific findings in BEL.
 
