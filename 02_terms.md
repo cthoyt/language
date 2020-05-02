@@ -1,5 +1,9 @@
 # BEL Terms
 
+Throughout this tutorial, most functions have both a long and short form.
+For brevity, the long forms will be introduced, but thereafter the short
+forms will be used.
+
 ## Physical Entities
 
 The following BEL Functions represent classes of abundances of specific types
@@ -12,32 +16,173 @@ represent the abundances of the AKT1 gene, RNA, and protein, respectively.
 
 ### Genes
 
-`geneAbundance(ns:v)` or `g(ns:v)` denotes the abundance of the gene designated
-by the value v in the namespace ns. `geneAbundance()` terms are used to
-represent the DNA encoding the specified gene. `geneAbundance()` is considered
-decreased in the case of a homozygous or heterozygous gene deletion, and
-increased in the case of a DNA amplification mutation. Events in which a
-protein binds to the promoter of a gene can be represented using the
-`geneAbundance()` function.
+The protein-coding gene [transmembrane O-mannosyltransferase targeting
+cadherins 1](https://identifiers.org/hgnc:24099) can be encoded in BEL
+like:
 
-#### Example - promoter binding event represented using geneAbundance
+```bel
+// long form
+geneAbundance(hgnc:24099 ! TMTC1)
 
- complex(p(HGNC:TP53), g(HGNC:CDKN1A))
+// short form
+g(hgnc:24099 ! TMTC1)
+```
 
-In the above example, the p53 protein binds the CDKN1A gene.
+In general, any gene can be encoded using the form:
+
+```
+g(prefix:identifier [! name])
+```
+
+You can encode the genomic relationship between a gene and the RNA(s) to which it
+is is transcribed like:
+
+```bel
+g(hgnc:24099 ! TMTC1) transcribedTo r(ensembl:ENST00000539277.6 ! TMTC1-203)
+g(hgnc:24099 ! TMTC1) transcribedTo r(ensembl:ENST00000256062.9 ! TMTC1-201)
+g(hgnc:24099 ! TMTC1) transcribedTo r(ensembl:ENST00000551659.5 ! TMTC1-206)
+g(hgnc:24099 ! TMTC1) transcribedTo r(ensembl:ENST00000552618.5 ! TMTC1-207)
+g(hgnc:24099 ! TMTC1) transcribedTo r(ensembl:ENST00000550354.1 ! TMTC1-205)
+g(hgnc:24099 ! TMTC1) transcribedTo r(ensembl:ENST00000319685.12 ! TMTC1-202)
+g(hgnc:24099 ! TMTC1) transcribedTo r(ensembl:ENST00000552925.5 ! TMTC1-208)
+g(hgnc:24099 ! TMTC1) transcribedTo r(ensembl:ENST00000546582.1 ! TMTC1-204)
+g(hgnc:24099 ! TMTC1) transcribedTo r(ensembl:ENST00000553189.5 ! TMTC1-209)
+```
+
+You can also encode the binding event between a gene and its transcription
+factor(s) like:
+
+```bel
+complex(g(hgnc:24099 ! TMTC1), p(hgnc:3819 ! FOXO1))
+```
+
+More information about complexes can be found [below](#complexes-of-physical-entities).
+
+#### Recommended Nomenclatures
+
+The following nomenclatures are recommended for genes:
+
+| prefix   | species   |
+| -------- | --------- |
+| ncbigene | all       |
+| hgnc     | human     |
+| flybase  | drosophila melanogaster |
+| mgi      | mouse     |
+| rgd      | rat       |
+| sgd      | Saccharomyces cerevisiae (baker's yeast) |
+| pombase  | Schizosaccharomyces pombe (fission yeast) |
+| xenbase  | xenopus (frogs) |
+| zfin     | zebrafish |
+
+The orthology between two genes from different species can be written
+like:
+
+```bel
+g(hgnc:14064 ! HDAC6) orthologousTo g(mgi:1333752 ! Hdac6)
+```
+
+#### Genetic Variants
+
+Variants like substitutions, deletions, insertions, and anything that
+can be represented with the [HGVS nomenclature](http://varnomen.hgvs.org/) can
+be added to a gene following the identifier using the `variant()` / `var()`
+function.
+
+For example, the protein-coding gene [CFTR (hgnc:1884)](https://identifiers.org/hgnc:1884)
+when missing phenylalanine 508 (__ΔF508__) misfolds and leads to cystic
+fibrosis. This genetic variant can be written in BEL as:
+
+```bel
+g(hgnc:1884 ! CFTR, var("c.1521_1523delCTT"))
+```
+
+This variant has been listed by the dbSNP database as [rs113993960](https://identifiers.org/dbsnp:rs113993960).
+It can be directly encoded in BEL as:
+
+```bel
+g(dbsnp:rs113993960)
+```
+
+The fact that these two BEL terms are not the same is different from identifier
+equivalence, so it can be encoded with the `equivalentTo` / `eq` relationship
+like:
+
+```bel
+g(dbsnp:rs113993960) eq g(hgnc:1884 ! CFTR, var("c.1521_1523delCTT"))
+```
+
+##### Example - substitution
+
+TODO
+
+##### Example - insertion
+
+TODO
+
+#### Genetic Modifications
+
+Modifications to the physical genomic sequence can be represented
+in BEL using the `geneModification()` / `gmod()` function following
+the identifier in a `g()` function.
+
+For example, the methylation of the NDUFB6 gene causes a decline in its
+expression in muscles (pubmed:17948130). This can be represented with:
+
+```bel
+// long form
+g(hgnc:7701 ! NDUFB6, geneModification(Methylation))
+
+// short form
+g(hgnc:7701 ! NDUFB6, gmod(Me))
+```
+
+In general, the `geneModification()` / `gmod()` function takes the
+following form:
+
+```
+gmod(prefix:identifier [! name])
+```
+
+However, there are several built-in gene modifications in BEL that
+can be referenced without a CURIE from the following table:
+
+| Short | Long |
+| ----- | ---- |
+| Me     | Methylation |
+| ADPRib | ADP-ribosylation |
+
 
 ### RNAs
+
+The long non-coding RNA [Homo sapiens MAPT antisense RNA 1 (MAPT-AS1)](https://rnacentral.org/rna/URS000075DB76/9606)
+can be encoded in BEL with:
+
+```bel
+// long form
+rnaAbundance(rnacentral:URS000075DB76 ! MAPT-AS1)
+
+// short form
+r(rnacentral:URS000075DB76 ! MAPT-AS1)
+```
+
+In general, any RNA type can be encoded using the form:
+
+```
+r(prefix:identifier [! name])
+```
+
+Like in the previous example, it can be shown from which gene an RNA is
+transcribed like:
+
+```bel
+g(hgnc:43738 ! ) transcribedTo r(rnacentral:URS000075DB76 ! MAPT-AS1)
+```
 
 `rnaAbundance(ns:v)` or `r(ns:v)` denotes the abundance of the RNA designated
 by the value v in the namespace +ns+, where +v+ references a gene. This
 function refers to all RNA designated by +ns:v+, regardless of splicing,
 editing, or polyadenylation stage.
 
-#### Example - RNA abundance
-
-```
-r(HGNC:AKT1)
-```
 
 ### Micro-RNAs
 
@@ -204,9 +349,9 @@ to specify sequence variations (gene, RNA, microRNA, protein),
 post-translational modifications (protein), fragment resulting from proteolytic
 processing (protein), or cellular location (most abundance types).
 
-#### Protein Modifications
+### Protein Modifications
 
-##### Post-translational modifications
+#### Post-translational modifications
 
 The `proteinModification()` or `pmod()` function can be used only as an
 argument within a `proteinAbundance()` function to indicate modification of the
@@ -224,53 +369,21 @@ amino acids, and `<pos>` (optional) is the position at which the modification
 occurs based on the reference sequence for the protein. If **`<pos>`** is
 omitted, then the position of the modification is unspecified. If both
 **`<code>`** and **`<pos>`** are omitted, then the residue and position of the
-modification are unspecified. The default BEL namespace includes commonly used
-protein modification types.
+modification are unspecified. 
 
-### Examples
 
-#### AKT1 phosphorylated at Serine 473
+The `proteinModification()` or `pmod()` function is used within a protein
+abundance to specify post-translational modifications. Types of
+post-translational modification are specified by a namespace value; the
+default BEL namespace provides many commonly used modification types.
+Abundances of modified proteins take the form `p(ns:v, pmod(ns:type_value, <code>, <pos>))`,
+where `<type>` (required) is the kind of modification, `<code>` (optional)
+is the one- or three- letter Supported One- and Three-letter Amino Acid
+Codes, amino acid code for the modified residue, and `<pos>` (optional) is
+the sequence position of the modification.
 
-default BEL namespace and 1-letter amino acid code:
-
-```
-p(HGNC:AKT1, pmod(Ph, S, 473))
-```
-
-default BEL namespace and 3-letter amino acid code:
-
-```
-p(HGNC:AKT1, pmod(Ph, Ser, 473))
-```
-
-[PSI-MOD](http://psidev.cvs.sourceforge.net/viewvc/psidev/psi/mod/data/PSI-MOD.obo)
-namespace and 3-letter amino acid code:
-
-```
-p(HGNC:AKT1, pmod(MOD:PhosRes, Ser, 473))
-```
-
-#### MAPK1 phosphorylated at both Threonine 185 and Tyrosine 187
-
-default BEL namespace and 3-letter amino acid code:
-
-```
-p(HGNC:MAPK1, pmod(Ph, Thr, 185), pmod(Ph, Tyr, 187))
-```
-
-#### Palmitoylated HRAS
-
-HRAS palmitoylated at an unspecified residue. Default BEL namespace:
-
-```
-p(HGNC:HRAS, pmod(Palm))
-```
-
-##### Modification Types Provided in Default BEL Namespace
-
-Additional modification types can be requested as needed, or an external
-vocabulary can be used. Like other BEL namespace values, these modification
-types can be equivalenced to values in other vocabularies.
+The default BEL namespace includes commonly used protein modification types
+from the following table:
 
 | Label     | Synonym                                                                             |
 | --------- | ----------------------------------------------------------------------------------- |
@@ -300,7 +413,7 @@ types can be equivalenced to values in other vocabularies.
 | UbMono    | monoubiquitination                                                                  |
 | UbPoly    | polyubiquitination                                                                  |
 
-##### Supported One- and Three-letter Amino Acid Codes
+The following one or three-letter amino acid codes are supported:
 
 | **Amino Acid** | **1-Letter Code** | **3-Letter Code** |
 | -------------- | ----------------- | ----------------- |
@@ -325,26 +438,44 @@ types can be equivalenced to values in other vocabularies.
 | Tyrosine      | Y | Tyr |
 | Valine        | V | Val |
 
-##### Post-Translationally Modified Protein Term Examples
+##### Example - AKT1 phosphorylated at Serine 473
 
-The `proteinModification()` or `pmod()` function is used within a protein
-abundance to specify post-translational modifications. Types of
-post-translational modification are specified by a namespace value; the
-default BEL namespace provides many commonly used modification types.
-Abundances of modified proteins take the form `p(ns:v, pmod(ns:type_value, <code>, <pos>))`,
-where `<type>` (required) is the kind of modification, `<code>` (optional)
-is the one- or three- letter Supported One- and Three-letter Amino Acid
-Codes, amino acid code for the modified residue, and `<pos>` (optional) is
-the sequence position of the modification.
+default BEL namespace and 1-letter amino acid code:
 
-* Hydroxylation
-* Phosphorylation
-* Acetylation
-* Glycosylation
-* Methylation
-* Ubiquitination
+```
+p(HGNC:AKT1, pmod(Ph, S, 473))
+```
 
-###### Hydroxylation
+default BEL namespace and 3-letter amino acid code:
+
+```
+p(HGNC:AKT1, pmod(Ph, Ser, 473))
+```
+
+[PSI-MOD](http://psidev.cvs.sourceforge.net/viewvc/psidev/psi/mod/data/PSI-MOD.obo)
+namespace and 3-letter amino acid code:
+
+```
+p(HGNC:AKT1, pmod(MOD:PhosRes, Ser, 473))
+```
+
+##### Example -  MAPK1 phosphorylated at both Threonine 185 and Tyrosine 187
+
+default BEL namespace and 3-letter amino acid code:
+
+```
+p(HGNC:MAPK1, pmod(Ph, Thr, 185), pmod(Ph, Tyr, 187))
+```
+
+##### Example - Palmitoylated HRAS
+
+HRAS palmitoylated at an unspecified residue. Default BEL namespace:
+
+```
+p(HGNC:HRAS, pmod(Palm))
+```
+
+##### Hydroxylation
 
 This term represents the abundance of human HIF1A protein
 hydroxylated at asparagine 803.
@@ -357,7 +488,7 @@ p(HGNC:HIF1A, proteinModification(Hy, Asn, 803))
 p(HGNC:HIF1A, pmod(Hy, Asn, 803))
 ```
 
-###### Phosphorylation
+##### Phosphorylation
 
 This term represents the phosphorylation of the human AKT protein family at an
 unspecified amino acid residue.
@@ -366,7 +497,7 @@ unspecified amino acid residue.
 p(SFAM:"AKT Family", pmod(Ph))
 ```
 
-###### Acetylation
+##### Acetylation
 
 This term represents the abundance of mouse RELA protein acetylated at lysine
 315.
@@ -375,7 +506,7 @@ This term represents the abundance of mouse RELA protein acetylated at lysine
 p(MGI:Rela, pmod(Ac, Lys, 315))
 ```
 
-###### Glycosylation
+##### Glycosylation
 
 This term represents the abundance of human SP1 protein glycosylated at an
 unspecified amino acid residue.
@@ -384,7 +515,7 @@ unspecified amino acid residue.
 p(HGNC:SP1, pmod(Glyco))
 ```
 
-###### Methylation
+##### Methylation
 
 This term represents the abundance of rat STAT1 protein methylated at an
 unspecified arginine residue:
@@ -393,7 +524,7 @@ unspecified arginine residue:
 p(RGD:STAT1, pmod(Me, Arg))
 ```
 
-###### Ubiquitination
+##### Ubiquitination
 
 This term represents the abundance of human MYC protein ubiquitinated at an
 unspecified lysine residue:
@@ -404,8 +535,6 @@ p(HGNC:MYC, pmod(Ub, Lys))
 
 #### Variants
 
-##### variant(""), var("")
-
 The `variant("<expression>")` or `var("<expression>")` function can be used as
 an argument within a `geneAbundance()`, `rnaAbundance()`, `microRNAAbundance()`,
 or `proteinAbundance()` to indicate a sequence variant of the specified
@@ -414,9 +543,7 @@ variant description expression, e.g., for a substitution, insertion, or
 deletion variant. Multiple `var("")` arguments may be applied to an abundance
 term.
 
-##### Protein examples
-
-###### reference allele
+##### Example - Protein reference allele
 
 ```
 p(HGNC:CFTR, var("="))
@@ -425,13 +552,13 @@ p(HGNC:CFTR, var("="))
 This is different than `p(HGNC:CFTR)`, the root protein abundance, which
 includes all variants.
 
-###### unspecified variant
+##### Example - Protein unspecified variant
 
 ```
 p(HGNC:CFTR, var("?"))
 ```
 
-###### substitution
+##### Example - Protein substitution
 
 ```
 p(HGNC:CFTR, var("p.Gly576Ala"))
@@ -445,7 +572,7 @@ ID in the lower example is preferred over the HGNC gene symbol. The __p.__
 within the `var("")` expression indicates that the numbering is based on a
 protein sequence.
 
-###### deletion
+##### Example - Protein deletion
 
 ```
 p(HGNC:CFTR, var("p.Phe508del"))
@@ -458,7 +585,7 @@ the RefSeq ID in the lower example is preferred over the HGNC gene symbol.
 The __p.__ within the `var("")` expression indicates that the numbering is
 based on a protein reference sequence.
 
-###### frameshift
+##### Example - Protein frameshift
 
 ```
 p(HGNC:CFTR, var("p.Thr1220Lysfs"))
@@ -519,39 +646,7 @@ p(HGNC:ABCA1, variant("p.Arg1851*"))
 p(HGNC:ABCA1, var("p.Arg1851*"))
 ```
 
-This term represents the abundance of human ABCA1 protein that has been
-truncated by substitution of Arginine 1851 with a stop codon.
 
-##### DNA (gene) examples
-
-These are all representations of CFTR __ΔF508__.
-
-###### SNP
-
-```
-g(SNP:rs113993960, var("delCTT"))
-```
-
-###### chromosome
-
-```
-g(REF:"NC_000007.13", var("g.117199646_117199648delCTT"))
-```
-
-###### gene - coding DNA reference sequence
-
-```
-g(HGNC:CFTR, var("c.1521_1523delCTT"))
-g(REF:"NM_000492.3", var("c.1521_1523delCTT"))
-```
-
-Because a specific position is referenced, a namespace value for a
-non-ambiguous sequence like the RefSeq ID in the lower example is preferred
-over the HGNC gene symbol. The __c.__ within the `var("")` expression indicates
-that the numbering is based on a coding DNA reference sequence.The coding DNA
-reference sequence covers the part of the transcript that is translated into
-protein; numbering starts at the A of the initiating ATG codon, and ends at the
-last nucleotide of the translation stop codon.
 
 ##### RNA examples
 
