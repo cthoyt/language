@@ -71,6 +71,7 @@ The following nomenclatures are recommended for genes:
 | rgd      | rat       |
 | sgd      | Saccharomyces cerevisiae (baker's yeast) |
 | pombase  | Schizosaccharomyces pombe (fission yeast) |
+| wormbase  | C elegans (nematode) |
 | xenbase  | xenopus (frogs) |
 | zfin     | zebrafish |
 | dbsnp    | human |
@@ -171,6 +172,13 @@ branch in the GO biological process namespace. Even though the semantics
 are not exactly correct, this still may prove a useful source for gene
 modification nomenclature.
 
+The previous example can be written with [DNA methylation (go:0006306)](https://identifiers.org/GO:0006306)
+instead of the BEL default name `Me` like:
+
+```bel
+g(hgnc:7701 ! NDUFB6, gmod(go:0006306 ! "DNA methylation"))
+```
+
 ### RNAs
 
 The long non-coding RNA [Homo sapiens MAPT antisense RNA 1 (MAPT-AS1)](https://rnacentral.org/rna/URS000075DB76/9606)
@@ -220,16 +228,59 @@ of a gene's expression [ref](https://identifiers.com/pubmed:27336847):
 r(rnacentral:URS000075DB76 ! MAPT-AS1) decreases r(hgnc:6893 ! MAPT)
 ```
 
+#### Recommended Nomenclatures
+
+The following nomenclatures are recommended for RNAs:
+
+| prefix     | species   |
+| ---------- | --------- |
+| ensembl | all |
+| rnacentral | all |
+| snornabase | all |
+
 ### Micro-RNAs
 
-`microRNAAbundance(ns:v)` or `m(ns:v)` denotes the abundance of the processed,
-functional microRNA designated by the value +v+ in the namespace +ns+.
+Micro-RNAs (or, miRNAs) are functional RNAs that regulate gene expression.
+Unlike other non-protein coding RNAs (e.g. lncRNAs, sRNAs, etc.), miRNAs
+have their own function in BEL. It works exactly the same way as the `r()`
+function.
 
-#### Example - microRNA abundance
+```bel
+// long form
+microRNAAbundance(mirbase:MI0000139 ! mmu-mir-1a-1)
+
+// short form
+m(mirbase:MI0000139 ! mmu-mir-1a-1)
+```
+
+
+Like in the previous two examples, it can be shown from which gene an miRNA is
+transcribed like:
 
 ```
-m(HGNC:MIR21)
+g(mgi:2676869 ! Mir1a-1) transcribedTo m(mirbase:MI0000139 ! mmu-mir-1a-1)
 ```
+
+miRNAs have the unique quality that they have a pre-mature and a mature variant.
+BEL doesn't have an ontological relationship for this yet, but it's very important
+to know the related *3'* and *5'* processed mature miRNAs, which are conveniently
+listed in miRBase.
+
+```bel
+m(mirbase:MI0000139 ! mmu-mir-1a-1) -- m(mirbase.mature:MIMAT0016979 ! mmu-miR-1a-1-5p)
+m(mirbase:MI0000139 ! mmu-mir-1a-1) -- m(mirbase.mature:MIMAT0000123 ! mmu-miR-1a-3p)
+```
+
+#### Recommended Nomenclatures
+
+The following nomenclatures are recommended for miRNAs:
+
+| prefix     | species   |
+| ---------- | --------- |
+| ensembl | all |
+| rnacentral | all |
+| mirbase | all |
+| mirbase.mature | all |
 
 ### Proteins
 
