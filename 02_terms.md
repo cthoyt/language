@@ -73,6 +73,7 @@ The following nomenclatures are recommended for genes:
 | pombase  | Schizosaccharomyces pombe (fission yeast) |
 | xenbase  | xenopus (frogs) |
 | zfin     | zebrafish |
+| dbsnp    | human |
 
 The orthology between two genes from different species can be written
 like:
@@ -103,9 +104,9 @@ It can be directly encoded in BEL as:
 g(dbsnp:rs113993960)
 ```
 
-The fact that these two BEL terms are not the same is different from identifier
-equivalence, so it can be encoded with the `equivalentTo` / `eq` relationship
-like:
+The equivalence between these two BEL terms is different than simple
+identifier equivalence, so it can be encoded with the
+`equivalentTo` / `eq` relationship like:
 
 ```bel
 g(dbsnp:rs113993960) eq g(hgnc:1884 ! CFTR, var("c.1521_1523delCTT"))
@@ -151,6 +152,24 @@ can be referenced without a CURIE from the following table:
 | Me     | Methylation |
 | ADPRib | ADP-ribosylation |
 
+These can be written as:
+
+```
+// long form
+gmod(Methylation)
+gmod(ADP-ribosylation)
+
+// short form
+gmod(Me)
+gmod(ADPRib)
+```
+
+While protein modifications have high quality sources like
+PSI-MOD, genenetic/genomic modifications do not. One source
+that may grow over time is the [DNA modification (go:0006304)](https://identifiers.org/GO:0006304)
+branch in the GO biological process namespace. Even though the semantics
+are not exactly correct, this still may prove a useful source for gene
+modification nomenclature.
 
 ### RNAs
 
@@ -165,7 +184,8 @@ rnaAbundance(rnacentral:URS000075DB76 ! MAPT-AS1)
 r(rnacentral:URS000075DB76 ! MAPT-AS1)
 ```
 
-In general, any RNA type can be encoded using the form:
+In general, any RNA type can be encoded using the form, with the exception of
+[miRNAs](#micro-rnas), which have their own function:
 
 ```
 r(prefix:identifier [! name])
@@ -178,11 +198,27 @@ transcribed like:
 g(hgnc:43738 ! ) transcribedTo r(rnacentral:URS000075DB76 ! MAPT-AS1)
 ```
 
-`rnaAbundance(ns:v)` or `r(ns:v)` denotes the abundance of the RNA designated
-by the value v in the namespace +ns+, where +v+ references a gene. This
-function refers to all RNA designated by +ns:v+, regardless of splicing,
-editing, or polyadenylation stage.
+It can also be shown that an RNA is translated to a protein like:
 
+```bel
+g(hgnc:6893 ! MAPT) transcribedTo r(ensembl:ENST00000344290.9 ! MAPT-204)
+r(ensembl:ENST00000344290.9 ! MAPT-204) translatedTo p(uniprot:P10636 ! TAU_HUMAN)
+```
+
+There are situations when the exact transcript for a given gene is not known,
+in which case it is common to refer to the RNA transcript using the gene's
+identifier like:
+
+```bel
+g(hgnc:6893 ! MAPT) transcribedTo r(hgnc:6893 ! MAPT)
+```
+
+A functional RNA might appear in a relationship in which it causes the regulation
+of a gene's expression [ref](https://identifiers.com/pubmed:27336847):
+
+```bel
+r(rnacentral:URS000075DB76 ! MAPT-AS1) decreases r(hgnc:6893 ! MAPT)
+```
 
 ### Micro-RNAs
 
