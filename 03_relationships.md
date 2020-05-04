@@ -1,21 +1,26 @@
 # BEL Relationships
 
-The following BEL Relationship types are included in the BEL v2.0 language specification:
+The following relationship types are included in BEL:
 
-* Causal Relationships
-* Correlative Relationships
-* Associative Relationships
-* Genomic Relationships
-* Ontological Relationships
-* Deprecated Relationships
-
-The most used BEL relationships should be the Causal Relationships, causal
-and Correlative Relationships, correlative relationship categories.
+* causal relationships
+* correlative Relationships
+* associative Relationships
+* genomic Relationships
+* ontological Relationships
+* deprecated Relationships
 
 ## Causal Relationships
 
 These relationship types denote a causal relationship, or the absence of a
 causal relationship between a subject and an object term.
+
+### regulates, reg
+
+For terms A and B, `A regulates B` or `A reg B` indicate that A is reported to
+have an effect on B, but information is missing about whether A increases B or
+A decreases B. This relationship provides more information than association,
+association, because the upstream entity (source term) and downstream entity
+(target term) can be assigned.
 
 ## increases, `->`
 
@@ -42,21 +47,31 @@ relationship.
 
 ### decreases, `-|`
 
-For terms A and B, `A decreases B` or `A -| B` indicate that increases in A have been observed to cause decreases in B.
+For terms A and B, `A decreases B` or `A -| B` indicate that increases in A
+have been observed to cause decreases in B.
 
-`A decreases B` also represents cases where decreases in A have been observed to cause increases in B, for example, in recording the results of gene deletion or other inhibition experiments.
+`A decreases B` also represents cases where decreases in A have been observed
+to cause increases in B, for example, in recording the results of gene deletion
+or other inhibition experiments.
 
 A is a BEL Term and B is either a BEL Term or a BEL Statement.
 
-The `decreases` relationship does not indicate that the changes in A are either necessary for changes in B, nor does it indicate that changes in A are sufficient to cause changes in B.
+The `decreases` relationship does not indicate that the changes in A are either
+necessary for changes in B, nor does it indicate that changes in A are
+sufficient to cause changes in B.
 
 ### directlyDecreases, `=|`
 
-For terms A and B, `A directlyDecreases B` or `A =| B` indicates that increases in A have been observed to cause decreases in B and that the mechanism of the causal relationship is based on physical interaction of entities related to A and B. This is a Direct Relationships, direct version of the decreases relationship.
+For terms A and B, `A directlyDecreases B` or `A =| B` indicates that increases
+in A have been observed to cause decreases in B and that the mechanism of the
+causal relationship is based on physical interaction of entities related to A
+and B. This is a Direct Relationships, direct version of the decreases
+relationship.
 
 ### rateLimitingStepOf
 
-For process, activity, or transformation term A and process term P, `A rateLimitingStepOf P` indicates both:
+For process, activity, or transformation term A and process term P,
+`A rateLimitingStepOf P` indicates both:
 
 ```
 A partOf bp(B)
@@ -65,7 +80,8 @@ A -> bp(B)
 
 #### Example
 
-The catalytic activity of HMG CoA reductase is a rate-limiting step for cholesterol biosynthesis:
+The catalytic activity of HMG CoA reductase is a rate-limiting step for
+cholesterol biosynthesis:
 
 ```
 act(p(HGNC:HMGCR), ma(cat)) rateLimitingStepOf bp(GOBP:"cholesterol biosynthetic process")
@@ -73,31 +89,38 @@ act(p(HGNC:HMGCR), ma(cat)) rateLimitingStepOf bp(GOBP:"cholesterol biosynthetic
 
 ### causesNoChange, cnc
 
-For terms A and B, `A causesNoChange B` or `A cnc B` indicate that B was observed not to change in response to changes in A.
+For terms A and B, `A causesNoChange B` or `A cnc B` indicate that B was
+observed not to change in response to changes in A.
 
-Statements using this relationship correspond to cases where explicit measurement of B demonstrates lack of significant change, not for cases where the state of B is unknown.
+Statements using this relationship correspond to cases where explicit
+measurement of B demonstrates lack of significant change, not for cases
+where the state of B is unknown.
 
-### regulates, reg
-
-For terms A and B, `A regulates B` or `A reg B` indicate that A is reported to have an effect on B, but information is missing about whether A increases B or A decreases B. This relationship provides more information than Xassociation, association, because the upstream entity (source term) and downstream entity (target term) can be assigned.
 
 ##### *Direct Relationships*
 
-Direct relationships include direct causal relationships and non-causal relationships that are considered direct because they are self-referential.
+Direct relationships include direct causal relationships and non-causal
+relationships that are considered direct because they are self-referential.
 
 ##### Direct causal relationships
 
-The direct casual relationships included in BEL v2.0 are `directlyIncreases` (`=>`) and `directlyDecreases` (`=|`).
+The direct casual relationships included in BEL v2.0 are `directlyIncreases`
+(`=>`) and `directlyDecreases` (`=|`).
 
-The direct casual relationships are causal relationships where the mechanism of the causal relationship is based on the physical interaction of entities related to the BEL Statement subject and object terms.
+The direct casual relationships are causal relationships where the mechanism
+of the causal relationship is based on the physical interaction of entities
+related to the BEL Statement subject and object terms.
 
-If A or B is an Abundance Functions, abundance, then members of the abundance are part of the interaction. If A or B are Xactivity, activities activities, then members of the abundances performing the activities physically interact.
+If A or B is an Abundance Functions, abundance, then members of the abundance
+are part of the interaction. If A or B are Xactivity, activities activities,
+then members of the abundances performing the activities physically interact.
 
 ##### Examples
 
 ###### Abundances and activities
 
-Inhibition of the Patched 1 receptor signaling activity by Hedgehog is represented as direct, because Hedgehog and Patched 1 physically interact:
+Inhibition of the Patched 1 receptor signaling activity by Hedgehog is
+represented as direct, because Hedgehog and Patched 1 physically interact:
 
 ```
 p(PFH:"Hedgehog Family") =| act(p(HGNC:PTCH1))
@@ -105,7 +128,11 @@ p(PFH:"Hedgehog Family") =| act(p(HGNC:PTCH1))
 
 ###### Transcription
 
-In the case of transcriptional activity, if the protein performing the transcriptional activity interacts with the gene that the RNA is transcribed from, the relationship is considered direct. For example, repression of the transcription of miR-21 by FOXO3 protein transcriptional activity is represented as direct because FOXO3 binds the miR-21 promoter:
+In the case of transcriptional activity, if the protein performing the
+transcriptional activity interacts with the gene that the RNA is transcribed
+from, the relationship is considered direct. For example, repression of the
+transcription of miR-21 by FOXO3 protein transcriptional activity is
+represented as direct because FOXO3 binds the miR-21 promoter:
 
 ```
  act(p(HGNC:FOXO3), ma(tscript)) =| r(HGNC:MIR21)

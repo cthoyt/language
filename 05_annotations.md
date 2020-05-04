@@ -1,5 +1,18 @@
 # BEL Annotations
 
+Each BEL Statement can optionally be annotated to express knowledge about the statement itself. Some important uses of annotations are to specify information about the:
+
+*   biological system in which the observation represented by the statement was made
+*   experimental methods used to demonstrate the observation
+*   knowledge source on which the statement is based, such as the citation and specific text supporting the statement
+
+Examples of annotations that could be associated with a BEL Statement are the:
+
+*   PubMed ID specifying the publication in which the observation was reported,
+*   Species, tissue, and cellular location in which the observations were made, and
+*   Dosage, exposure and recovery time associated with the observation.
+
+
 ##### BEL Statement Annotation Examples
 
 Annotations associate context information with BEL Statements, including citation of the source material, evidence text supporting the statement, and the experimental context for the scientific observations represented by the statement. To associate Annotations with statements, Annotations are `SET` and `UNSET` within a BEL Document. In the BEL Script syntax, once an Annotation has been `SET` all following statements inherit the annotation until is explicitly `UNSET` or a new Annotation of the same type is `SET`.

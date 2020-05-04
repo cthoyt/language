@@ -4,6 +4,31 @@ Throughout this tutorial, most functions have both a long and short form.
 For brevity, the long forms will be introduced, but thereafter the short
 forms will be used.
 
+Two general categories of biological entities are represented as BEL Terms:
+**abundances** and **processes**.
+
+### Abundances
+
+Life science experiments often measure the abundance of a type of thing in a
+given sample or set of samples. BEL Abundance Terms represent classes of
+abundance, the abundances of specific types of things. Examples include the
+__protein abundance of TP53__, the __RNA abundance of CCND1__, the __abundance
+of the protein AKT1 phosphorylated at serine 21__, or the __abundance of the
+complex of the proteins CCND1 and CDK4__.
+
+### Processes
+
+BEL Process Terms represent classes of complex phenomena taking place at the
+level of the cell or the organism, such as the biological process of __cell
+cycle__ or a disease process such as __Cardiomyopathy__. In other cases, BEL
+Terms may represent classes of specific molecular activities, such as the
+kinase activity of the AKT1 protein, or a specific chemical reaction like
+conversion of superoxides to hydrogen peroxide and oxygen.
+
+Measurable biological parameters such as __Blood Pressure__ or __Body
+Temperature__ are represented as process BEL Terms. These BEL Terms denote
+biological activities that, when measured, are reduced to an output parameter.
+
 ## Physical Entities
 
 The following BEL Functions represent classes of abundances of specific types
@@ -240,7 +265,7 @@ of a gene's expression [ref](https://identifiers.com/pubmed:27336847):
 r(rnacentral:URS000075DB76 ! MAPT-AS1) decreases r(hgnc:6893 ! MAPT)
 ```
 
-## RNA Variants
+#### RNA Variants
 
 Like genes, RNAs can be described with variants using the `var()`
 function.

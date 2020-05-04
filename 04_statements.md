@@ -297,3 +297,50 @@ p(hgnc:391 ! AKT1, loc(MESHCS:Cytoplasm))
 a(CHEBI:"calcium(2+)", loc(GO:"endoplasmic reticulum"))
 ```
 
+
+
+
+## Nested Statements
+
+BEL Terms are denoted by expressions composed of a BEL Function and a list of
+arguments. BEL v2.0 specifies a set of approximately 20 functions allowed in
+term expressions.
+
+The combination of a BEL function and its arguments fully specifies a BEL Term. The BEL Term expression `f(a)` denotes a BEL Term defined by function `f()` applied to an argument `a`. Wherever the same function is applied to the same arguments, the resulting BEL Term references the same biological entity.
+
+The semantics of a BEL Term are determined by the function used in the term expression. For example, the function `proteinAbundance()` is defined such that any term expression using `proteinAbundance()` represents a class of abundance of protein. Many BEL functions take only single values as arguments, providing a structured method of using ontologies and vocabularies in BEL. For example, values in the HUGO Gene Nomenclature Committee (HGNC) vocabulary of official human gene symbols can be used to designate gene, RNA, and protein abundances. The function `proteinAbundance()` could then be applied to an HGNC gene symbol, __AKT1__ for example, to indicate the class of protein abundances produced by the AKT1 gene, producing the BEL Term `proteinAbundance(HGNC:AKT1)`.
+
+
+#### Example BEL Statements
+
+##### Subject Term Only
+
+```
+complex(p(HGNC:CCND1), p(HGNC:CDK4))
+```
+
+The abundance of a complex formed from protein abundances designated by __CCND1__ and __CDK4__ in the HGNC namespace. This is a subject term only statement, and indicates that the entity specified by the term has been observed.
+
+##### Causal
+
+```
+p(HGNC:CCND1) => act(p(HGNC:CDK4))
+```
+
+The abundance of the protein designated by __CCND1__ in the HGNC namespace directly increases the activity of the abundance of the protein designated by __CDK4__ in the HGNC namespace.
+
+##### Causal
+
+```
+p(HGNC:BCL2)-| bp(MESHPP:Apoptosis)
+```
+
+The abundance of the protein designated by __BCL2__ in the HGNC namespace decreases the biological process designated by __apoptosis__ in the MESHPP (phenomena and processes) namespace.
+
+##### Nested Statement - Object Term is Statement
+
+```
+p(HGNC:GATA1) => ( act(p(HGNC:ZBTB16)) => r(HGNC:MPL) )
+```
+
+The abundance of the protein designated by __GATA1__ in the HGNC namespace directly increases the process in which the activity of the protein abundance designated by __ZBTB16__ in the HGNC namespace directly increases the abundance of RNA designated by __MPL__ in the HGNC namespace.
