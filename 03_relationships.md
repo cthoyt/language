@@ -2,12 +2,12 @@
 
 The following relationship types are included in BEL:
 
-* causal relationships
-* correlative Relationships
-* associative Relationships
-* genomic Relationships
-* ontological Relationships
-* deprecated Relationships
+* Causal relationships
+* Correlative Relationships
+* Associative Relationships
+* Genomic Relationships
+* Ontological Relationships
+* Deprecated Relationships
 
 ## Causal Relationships
 

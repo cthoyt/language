@@ -7,7 +7,7 @@ forms will be used.
 Two general categories of biological entities are represented as BEL Terms:
 **abundances** and **processes**.
 
-### Abundances
+### Physical Entities
 
 Life science experiments often measure the abundance of a type of thing in a
 given sample or set of samples. BEL Abundance Terms represent classes of
@@ -41,9 +41,8 @@ represent the abundances of the AKT1 gene, RNA, and protein, respectively.
 
 ### Genes
 
-The protein-coding gene [transmembrane O-mannosyltransferase targeting
-cadherins 1](https://identifiers.org/hgnc:24099) can be encoded in BEL
-like:
+The protein-coding gene [TMTC1](https://identifiers.org/hgnc:24099) can be
+encoded in BEL like:
 
 ```bel
 // long form
@@ -87,19 +86,22 @@ More information about complexes can be found [below](#complexes-of-physical-ent
 
 The following nomenclatures are recommended for genes:
 
-| prefix   | species   |
-| -------- | --------- |
-| ncbigene | all       |
-| hgnc     | human     |
-| flybase  | drosophila melanogaster |
-| mgi      | mouse     |
-| rgd      | rat       |
-| sgd      | Saccharomyces cerevisiae (baker's yeast) |
-| pombase  | Schizosaccharomyces pombe (fission yeast) |
-| wormbase  | C elegans (nematode) |
-| xenbase  | xenopus (frogs) |
-| zfin     | zebrafish |
-| dbsnp    | human |
+| prefix   | name | species   |
+| -------- | ---- | --------- |
+| ncbigene | NCBI Entrez Gene | all       |
+| hgnc     | HGNC | human     |
+| flybase  | FlyBase | drosophila melanogaster |
+| mgi      | Mouse Genome Informatics | mouse     |
+| rgd      | Rat Genome Database | rat       |
+| sgd      | Saccharomyces Genome Database | Saccharomyces cerevisiae (baker's yeast) |
+| pombase  | PomBase | Schizosaccharomyces pombe (fission yeast) |
+| wormbase  | WormBase | C elegans (nematode) |
+| xenbase  | XenBase | xenopus (frogs) |
+| zfin     | Zebrafish Information Network | zebrafish |
+| dbsnp    | dbSNP | human |
+
+Some nomenclatures are species-specific (e.g. HGNC covers human genes),
+and some cover many species (e.g. NCBI Entrez Gene xocrse many.
 
 The orthology between two genes from different species can be written
 like:
@@ -120,7 +122,17 @@ when missing phenylalanine 508 (__ΔF508__) misfolds and leads to cystic
 fibrosis. This genetic variant can be written in BEL as:
 
 ```bel
+// long form
+g(hgnc:1884 ! CFTR, variant("c.1521_1523delCTT"))
+
+// short form
 g(hgnc:1884 ! CFTR, var("c.1521_1523delCTT"))
+```
+
+In general, any variant can be encoded like:
+
+```
+var("HGVS string")
 ```
 
 This variant has been listed by the dbSNP database as [rs113993960](https://identifiers.org/dbsnp:rs113993960).
@@ -140,11 +152,13 @@ g(dbsnp:rs113993960) eq g(hgnc:1884 ! CFTR, var("c.1521_1523delCTT"))
 
 Because a specific position is referenced, a namespace value for a
 non-ambiguous sequence like the RefSeq ID in the lower example is preferred
-over the HGNC gene symbol. The __c.__ within the `var("")` expression indicates
-that the numbering is based on a coding DNA reference sequence. The coding DNA
-reference sequence covers the part of the transcript that is translated into
-protein; numbering starts at the A of the initiating ATG codon, and ends at the
-last nucleotide of the translation stop codon.
+over the HGNC gene symbol (when possible). The __c.__ within the HGVS string
+indicates that the numbering is based on a coding DNA reference sequence.
+The coding DNA reference sequence covers the part of the transcript that is
+translated into protein; numbering starts at the A of the initiating ATG codon,
+and ends at the last nucleotide of the translation stop codon.
+
+The CFTR gene can be written with a RefSeq identifier as:
 
 ```bel
 g(refseq:"NM_000492.3", var("c.1521_1523delCTT"))
@@ -152,7 +166,14 @@ g(refseq:"NM_000492.3", var("c.1521_1523delCTT"))
 
 ##### Example - substitution
 
-TODO
+
+
+##### Example - double substitution
+
+```bel
+g(hgnc:2928 ! DMD, var("c.[145C>T;147C>G]")
+```
+
 
 ##### Example - insertion
 
@@ -422,11 +443,10 @@ includes all variants.
 p(hgnc:1884 ! CFTR, var("?"))
 ```
 
-##### Example - Protein substitution
+##### Example - Protein substitution 1
 
 ```
 p(hgnc:1884 ! CFTR, var("p.Gly576Ala"))
-p(refseq:"NP_000483.3", var("p.Gly576Ala"))
 ```
 
 CFTR substitution variant Glycine 576 Alanine (HGVS __NP_000483.3:p.Gly576Ala__).
@@ -436,22 +456,14 @@ ID in the lower example is preferred over the HGNC gene symbol. The __p.__
 within the `var("")` expression indicates that the numbering is based on a
 protein sequence.
 
-
-##### Example - Protein frameshift
-
-```
-p(hgnc:1884 ! CFTR, var("p.Thr1220Lysfs"))
-p(refseq:"NP_000483.3", var("p.Thr1220Lysfs"))
+```bel
+p(refseq:"NP_000483.3", var("p.Gly576Ala"))
 ```
 
-CFTR frameshift variant __(__HGVS__ NP_000483.3:p.Thr1220Lysfs*7). __Because a
-specific position is referenced, a namespace value for a non-ambiguous sequence
-RefSeq ID in the lower example is preferred over the HGNC gene symbol. The
-__p.__ within the `var("")` expression indicates that the numbering is based on
-a protein reference sequence.
+##### Example - Protein Substitution 2
 
-
-##### Example - Protein Substitution
+This term represents the abundance of the human PIK3CA protein in which the
+glutamic acid residue at position 545 has been substituted with a lysine.
 
 ```
 // long form
@@ -461,10 +473,23 @@ p(HGNC:PIK3CA, variant("p.Glu545Lys"))
 p(HGNC:PIK3CA, var("p.Glu545Lys"))
 ```
 
-This term represents the abundance of the human PIK3CA protein in which the
-glutamic acid residue at position 545 has been substituted with a lysine.
+##### Example - Protein frameshift
 
-###### Example - Protein Truncation
+```
+p(hgnc:1884 ! CFTR, var("p.Thr1220Lysfs"))
+```
+
+CFTR frameshift variant __(__HGVS__ NP_000483.3:p.Thr1220Lysfs*7). __Because a
+specific position is referenced, a namespace value for a non-ambiguous sequence
+RefSeq ID in the lower example is preferred over the HGNC gene symbol. The
+__p.__ within the `var("")` expression indicates that the numbering is based on
+a protein reference sequence.
+
+```bel
+p(refseq:"NP_000483.3", var("p.Thr1220Lysfs"))
+```
+
+##### Example - Protein Truncation
 
 The abundances of proteins that are truncated by the introduction of a stop
 codon can be specified by using the `variant("")` or `var("")` function within
@@ -513,35 +538,20 @@ p(HGNC:YFG, frag("?", "55kD"))
 
 #### Protein Modifications
 
-The `proteinModification()` or `pmod()` function can be used only as an
-argument within a `p()` function to indicate modification of the
-specified protein. Multiple modifications can be applied to the same protein
-abundance. Modified protein abundance term expressions have the general form:
+The `proteinModification()` / `pmod()` function can be inside the `p()`
+function to indicate modification of the specified protein. Multiple
+modifications can be applied to the same protein abundance. For example,
+the phosphorylated Tau protein would look like this:
 
+```bel
+// long form
+p(uniprot:P10636, proteinModification(Phosphorylation))
+
+// short form
+p(uniprot:P10636, pmod(Ph))
 ```
-p(ns:protein_value, pmod(ns:type_value, <code>, <pos>))
-```
 
-`type_value` (required) is a namespace value for the type of modification,
-**`<code>`** (optional) is a Supported One- and Three-letter Amino Acid
-Codes, single-letter or three-letter code for one of the twenty standard
-amino acids, and `<pos>` (optional) is the position at which the modification
-occurs based on the reference sequence for the protein. If **`<pos>`** is
-omitted, then the position of the modification is unspecified. If both
-**`<code>`** and **`<pos>`** are omitted, then the residue and position of the
-modification are unspecified. 
-
-
-The `proteinModification()` or `pmod()` function is used within a protein
-abundance to specify post-translational modifications. Types of
-post-translational modification are specified by a namespace value; the
-default BEL namespace provides many commonly used modification types.
-Abundances of modified proteins take the form `p(ns:v, pmod(ns:type_value, <code>, <pos>))`,
-where `<type>` (required) is the kind of modification, `<code>` (optional)
-is the one- or three- letter Supported One- and Three-letter Amino Acid
-Codes, amino acid code for the modified residue, and `<pos>` (optional) is
-the sequence position of the modification.
-
+The first argument of `pmod()` is the protein modification type.
 The default BEL namespace includes commonly used protein modification types
 from the following table:
 
@@ -573,7 +583,16 @@ from the following table:
 | UbMono    | monoubiquitination                                                                  |
 | UbPoly    | polyubiquitination                                                                  |
 
-The following one or three-letter amino acid codes are supported:
+However, any identifier with the form `prefix:identifier [! name]` can be used.
+
+Optionally, the amino acid residue which is modified can be specified with its
+three letter code:
+
+```bel
+p(uniprot:P10636, pmod(Ph, Ser))
+```
+
+The following amino acids are supported in BEL:
 
 | **Amino Acid** | **1-Letter Code** | **3-Letter Code** |
 | -------------- | ----------------- | ----------------- |
@@ -597,6 +616,23 @@ The following one or three-letter amino acid codes are supported:
 | Tryptophan    | W | Trp |
 | Tyrosine      | Y | Tyr |
 | Valine        | V | Val |
+
+Optionally, the position which is modified can be specified
+
+```bel
+p(uniprot:P10636, pmod(Ph, Ser, 519))
+```
+
+More information about this phosphorylation can be found on
+[PhosphoSitePlus](https://www.phosphosite.org/siteAction.action?id=2977).
+
+
+Modified protein abundance term expressions have the general form:
+
+```
+p(prefix:identifier [! name], pmod(prefix:identifier [! name], <code>, <pos>))
+```
+
 
 ##### Example - AKT1 phosphorylated at Serine 473
 
@@ -629,7 +665,7 @@ HRAS palmitoylated at an unspecified residue. Default BEL namespace:
 p(hgnc:5173 ! HRAS, pmod(Palm))
 ```
 
-##### Hydroxylation
+##### Example - Hydroxylation
 
 This term represents the abundance of human HIF1A protein
 hydroxylated at asparagine 803.
@@ -642,40 +678,40 @@ p(hgnc:4910 ! HIF1A, proteinModification(Hy, Asn, 803))
 p(hgnc:4910 ! HIF1A, pmod(Hy, Asn, 803))
 ```
 
-##### Phosphorylation
+##### Example - Phosphorylation
 
 This term represents the phosphorylation of the human AKT protein family at an
 unspecified amino acid residue.
 
 ```
-p(SFAM:"AKT Family", pmod(Ph))
+p(fplx:AKT, pmod(Ph))
 ```
 
-##### Acetylation
+##### Example - Acetylation
 
 This term represents the abundance of mouse RELA protein acetylated at lysine
 315.
 
 ```
-p(MGI:Rela, pmod(Ac, Lys, 315))
+p(mgi:103290 ! Rela, pmod(Ac, Lys, 315))
 ```
 
-##### Glycosylation
+##### Example - Glycosylation
 
 This term represents the abundance of human SP1 protein glycosylated at an
 unspecified amino acid residue.
 
 ```
-p(HGNC:SP1, pmod(Glyco))
+p(hgnc:11205 ! SP1, pmod(Glyco))
 ```
 
-##### Methylation
+##### Example - Methylation
 
 This term represents the abundance of rat STAT1 protein methylated at an
 unspecified arginine residue:
 
 ```
-p(RGD:STAT1, pmod(Me, Arg))
+p(rgd:3771 ! STAT1, pmod(Me, Arg))
 ```
 
 ##### Ubiquitination
@@ -684,11 +720,10 @@ This term represents the abundance of human MYC protein ubiquitinated at an
 unspecified lysine residue:
 
 ```
-p(HGNC:MYC, pmod(Ub, Lys))
+p(hgnc:7553 ! MYC, pmod(Ub, Lys))
 ```
 
 #### Recommended Nomenclatures
-
 
 ### Protein Families
 
@@ -724,6 +759,14 @@ p(hgnc:393 ! AKT3) isA p(fplx:AKT)
 Warning: some nomenclatures, such as InterPro, are not organism specific. 
 This results in protein families that contain proteins that are orthologs.
 
+Protein families may share a position that is post-translationally modified
+or a variant. Both the `pmod()` and `var()` functions are allowed for protein
+families, but use with care. For example, the entire AKT family shares the
+Ser473 phosphorylation.
+
+```bel
+p(fplx:AKT, pmod(Ph, Ser, 473))
+```
 
 #### Recommended Nomenclatures
 
@@ -780,28 +823,127 @@ be manually curated.
 
 ### Populations
 
-Cells and Species
+The `populationAbundance()` / `pop()` function allow for capturing Taxon and
+Cell population level changes due to environment or treatments. For example,
+a population of Streptococcus entericus can be encoded as:
+
+```bel
+// long form
+populationAbundance(taxonomy:1123302 ! "Streptococcus entericus DSM 14446")
+
+// short form
+pop(taxonomy:1123302 ! "Streptococcus entericus DSM 14446")
+```
+
+Similarly, a population of white adipocytes can be encoded as:
+
+```bel
+pop(mesh:D052436 ! "Adipocytes, White")
+```
+
+Unlike the gene, RNA, and protein, there are no `var()` or modification
+functions for `pop()`.
+
+This function was added in BEL 2.1. The following are example use cases:
+
+```bel
+# Penicillin decreases the population of Streptococcus entericus
+a(chebi:17334 ! penicillin) decreases pop(taxonomy:1123302 ! "Streptococcus entericus DSM 14446")
+
+# Firmicutes bacteria increases obesity
+pop(taxonomy:1239 ! Firmicutes) increases path(mesh:D009765 ! Obesity)
+
+# A drug decreases the population of adipocytes
+a(chebi:6801 ! metformin) decreases pop(mesh:D052436 ! "Adipocytes, White")
+
+# P. falciparum invasion of RBCs increases malaria
+complex(pop(taxonomy:5833 ! "Plasmodium falciparum"), pop(bto:0000424 ! erythrocyte)) increases path(doid:12365 ! malaria)
+
+#S. typhimurium in complex with L-ficolin (an opsonin) enhances phagocytosis [PMID:8576206]
+complex(pop(taxonomy:90371), p(hgnc:3624 ! FCN2)) increases bp(go:0006909 ! phagocytosis)
+```
+
+#### Recommended Nomenclatures
+
+| prefix | name |
+| ------ | ---- |
+| taxonomy  | NCBI Taxonomy |
+| bto | Brenda Tissue Ontology |
+| cl | Cell Ontology |
+| clo | Cell Line Ontology | 
+| efo | Experimental Factor Ontology | 
 
 ### Other Physical Entities
 
-`abundance(ns:v)` or `a(ns:v)` denotes the abundance of the entity designated
-by the value `v` in the namespace `ns`. abundance is a general abundance term
-that can be used for chemicals or other molecules not defined by a more
-specific abundance function. Gene, RNA, protein, and microRNA abundances should
-be represented using the appropriate specific abundance function.
+Small molecules, chemicals, and drugs can be represented with the
+`abundance()` / `a()` function. For example, the drug Viagra can be
+encoded as:
 
-#### Example - drugs
+```bel
+// long form
+abundance(chebi:58987 ! "sildenafil citrate")
 
-#### Examples - small molecule and chemical
+// short form
+a(chebi:58987 ! "sildenafil citrate")
+``` 
 
+Classes of chemicals can be encoded with `a()` as well:
+
+```bel
+a(chebi:26523 ! "reactive oxygen species") 
 ```
-a(CHEBI:"oxygen atom")
-a(CHEBI:thapsigargin)
+
+Chemicals that are part of a class can be denoted using the `isA`
+relationship, though these relationships can often be programatically
+extracted from ontologies such as ChEBI:
+
+```bel
+a(chebi:16240 ! hydrogen peroxide) isA a(chebi:26523 ! "reactive oxygen species") 
+a(chebi:25935 ! hydroperoxyl) isA a(chebi:26523 ! "reactive oxygen species") 
+a(chebi:29191 ! hydroxyl) isA a(chebi:26523 ! "reactive oxygen species") 
+...
 ```
 
-#### Example - cellular structure
+In general, an abundance can be written like:
 
-#### Example - cells
+```bel
+a(prefix:identifier [! name])
+```
+
+Abundances do not have `variant()` modifiers like genes, RNAs, and proteins.
+
+#### Recommended Chemical Nomenclature
+
+| prefix | name |
+| ------ | ---- |
+| chebi  | Chemical Entities of Biological Interest |
+| drugbank |
+| pubchem.compound | PubChem |
+| chembl | ChEMBL | 
+
+#### Not Recommended Chemical Nomenclature
+
+| prefix | name | reason |
+| ------ | ---- | ------ |
+| mesh   | Medical Subject Headings | no cross-references to other nomenclatures or structural information
+| schem  | Selventa chemicals | not maintained
+
+#### Other Entity Types
+
+Other entity types can be encoded as `abundances()` that do not fit well into
+the paradigm of protein, such as functional nucleic acids, cellular structures,
+and small functional peptides.
+
+
+```bel
+// cellular structure
+a(go:0022904 ! "respiratory electron transport chain")
+```
+
+```bel
+// aggregates of proteins
+a(conso:CONSO00358 ! TDP-43 oligomers)
+```
 
 ### Complexes of Physical Entities
 
@@ -812,12 +954,6 @@ namespace value or with a list of abundance terms.
 molecular complex designated by the value `v` in the namespace `ns`. This form
 is generally used to identify abundances of named complexes.
 
-#### Example - named complex
-
-```
-complex(SCOMP:"AP-1 Complex")
-```
-
 `complexAbundance(<abundance term list>)` denotes the abundance of the
 molecular complex of members of the abundances denoted by
 `<abundance term list>`, a list of abundance terms supplied as arguments.
@@ -826,155 +962,165 @@ interpreted as the same term. Members of a molecular complex retain their
 individual identities. The`complexAbundance()` function does not specify the
 duration or stability of the interaction of the members of the complex.
 
-#### Example - composed complex of proteins
+The abundances of molecular complexes are represented using the
+`complexAbundance()` function. This function can take either a list of
+abundance terms or a value from a namespace of molecular complexes as
+its argument.
+
+Both BEL Terms represent the IkappaB kinase complex. The first by referencing
+a named protein complex within the [GO namespace](http://geneontology.org/page/cellular-component-ontology-guidelines).
 
 ```
-complex(p(HGNC:FOS), p(HGNC:JUN))
+// long form
+complexAbundance(go:0008385 ! "IkappaB kinase complex")
+
+// short form
+complex(go:0008385 ! "IkappaB kinase complex")
 ```
 
-#### Example - composed complex of protein and ligand
-
-#### Example - composed complex of virus and receptor
-
-TODO
-
-#### Example - composed complex of two cell types
-
-#### Example - Binding Interaction
-
-The `complexAbundance()` function can be used to specify molecular interactions
-between abundances. This function can take either a list of abundances that
-define a molecular complex or a namespace value that represents a molecular
-complex (e.g., many GO Cellular Component values) as an argument. These
-examples demonstrate the use of the `complexAbundance()` function to represent
-protein-protein, protein-chemical, and protein-DNA interactions.
-
-* Protein – protein interactions
-* Protein – DNA interactions
-* Protein – small molecule interactions
-
-
-#### Example - protein-protein interaction as BEL statement
-
-This statement represents that MTOR and AKT1S1 proteins physically interact.
-Note that this statement has only an object term and no subject term and
-relationship.
+Define the enumerating the IkappaB kinase complex by composition of 
+its member proteins: CHUK, IKBKB, and IKBKG.
 
 ```
-SET Citation = {"PubMed", "17277771"}
-SET Support = "Here, we identify PRAS40 (proline-rich Akt/PKB substrate 40 kDa) as a novel mTOR binding partner"
-// disambiguation PRAS40 = HGNC AKT1S1
-complex(p(hgnc:391 ! AKT1S1), p(hgnc:3942 ! MTOR))
+// long form
+complexAbundance(p(hgnc:1974 ! CHUK), p(hgn:c5960 ! IKBKB), p(hgnc:5961 ! IKBKG))
+
+// short form
+complex(p(hgnc:1974 ! CHUK), p(hgnc:5960 ! IKBKB), p(hgnc:5961 ! IKBKG))
 ```
 
-#### Example - protein-protein interaction as Statement object
+Members of a complex can be annotated to it using the `partOf` like in
 
-Here, a protein-protein interaction is the object of a BEL Statement. This
-statement expresses that the MTOR and STAT3 proteins associate and that
-increases in the protein abundance of BMP4 can increase the abundance of
-the complex comprised of MTOR and STAT3.
-
-```
-SET Citation = {"PubMed", "12796477"}
-SET Support = "Upon BMP4 treatment, the serine-threonine kinase FKBP12/rapamycin-associated protein (FRAP), mammalian target of rapamycin (mTOR), associates with Stat3 and facilitates STAT activation."
-p(hgnc:1071 ! BMP4) -> complex(p(hgnc:3942 ! MTOR), p(hgnc:11364 ! STAT3))
+```bel
+p(hgnc:1974 ! CHUK)  partOf complex(go:0008385 ! "IkappaB kinase complex")
+p(hgnc:5960 ! IKBKB) partOf complex(go:0008385 ! "IkappaB kinase complex")
+p(hgnc:5961 ! IKBKG) partOf complex(go:0008385 ! "IkappaB kinase complex")
 ```
 
-###### Protein – DNA interactions
+However, resources like FamPlex usually provide these relationships that
+can be automatically added.
 
-#### Example - transcription factor protein binding to DNA
+##### Example - composed complex of proteins
 
-This statement expresses that STAT3 protein binds to the CCL11 gene DNA,
-and that this association is increased by IL17A.
-
-```
-SET Citation = {"PubMed", "19265112"}
-SET Support ="IL-17A induced at 1 h a marked enrichment of STAT3- associated CCL11 promoter DNA"
-p(hgnc:5981 ! IL17A) -> complex(p(hgnc:11364 ! STAT3), g(hgnc:10610 ! CCL11))
+```bel
+complex(p(hgnc:3796 ! FOS), p(hgnc:6204 ! JUN))
 ```
 
-###### Protein – small molecule interactions
+##### Example - composed complex of protein and ligand
 
-#### Example - protein binding to a small molecule
-
-This statement represents that PIP3 binds AKT1 protein.
-
+```bel
+complex(a(chebi:132964 ! "fluazifop-P-butyl"), p(ec-code:6.4.1.2 ! "acetyl-CoA carboxylase"))
 ```
-SET Citation = {"PubMed", "15987444"}
-SET Support = "After PIP3 binding, Akt1 is activated"
-// disambiguation PIP3 = CHEBI 1-phosphatidyl-1D-myo-inositol 3,4,5-trisphosphate
-complex(a(CHEBI:"1-phosphatidyl-1D-myo-inositol 3,4,5-trisphosphate"), p(hgnc:391 ! AKT1))
+
+##### Example - composed complex of virus and cell
+
+```bel
+complex(pop(taxonomy:5833 ! "Plasmodium falciparum"), pop(bto:0000424 ! erythrocyte))
+```
+
+##### Example - a protein bound to gene
+
+```bel
+complex(p(hgnc:11364 ! STAT3), g(hgnc:10610 ! CCL11))
 ```
 
 ## Process Functions
 
-The following BEL Functions represent classes of events or phenomena taking place at the level of the cell or the organism which do not correspond to molecular abundances, but instead to a biological process like angiogenesis or a pathology like cancer.
+The following BEL Functions represent classes of events or phenomena taking
+place at the level of the cell or the organism which do not correspond to
+molecular abundances, but instead to a biological process like angiogenesis
+or a pathology like cancer.
 
-#### Biological Processes
+### Biological Processes
 
-`biologicalProcess(ns:v)` or `bp(ns:v)` denotes the process or population of events designated by the value +v+ in the namespace +ns+.
+Pathways, biological processes, and high-order molecular-level phenomena can
+be represented with the `biologicalProcess()` / `bp()` function.
 
-### Examples
+For example, the process of angiogenesis can be represented with:
 
-```
-bp(GO:"cell cycle arrest")
-bp(GO:angiogenesis)
-```
-
-#### Pathologies
-
-`pathology(ns:v)` or `path(ns:v)` denotes the disease or pathology process
-designated by the value +v+ in the namespace +ns+. The `pathology()` function
-is included to facilitate the distinction of pathologies from other biological
-processes because of their importance in many potential applications in the
-life sciences.
-
-*Note*, though it is named pathology, this function is also used for phenotypes,
-psychiatric conditions, side effects, and other higher order, organism-level
-phenomena. 
-
-### Examples
-
-```
-pathology(MESH:"Pulmonary Disease, Chronic Obstructive")
-pathology(MESH:adenocarcinoma)
+```bel
+bp(go:0001525 ! angiogenesis)
 ```
 
-##### Biological Processes and Pathologies Term Examples
+Likewise, the Signaling by Hippo pathway from Reactome can be represented with:
 
-Biological phenomena that occur at the level of the cell or the organism are considered processes. These terms are represented by values from namespaces like GO and MeSH.
-
-* Biological Processes
-* Diseases and Pathologies
-
-###### Biological Processes
-
-Cellular senescence can be represented by:
-
-###### Long Form
-
+```bel
+bp(reactome:R-HSA-2028269 ! "Signaling by Hippo")
 ```
+
+There are no modifiers to the `bp()` function.
+
+#### Recommended Nomenclatures
+
+| prefix | name |
+| ------ | ---- |
+| go  | Gene Ontology |
+| wikipathways  | WikiPathways |
+| reactome  | Reactome |
+
+#### Not Recommended Nomenclature
+
+| prefix | name | reason |
+| ------ | ---- | ------ |
+| mesh   | Medical Subject Headings | no cross-references to other nomenclatures
+| ncit  | National Cancer Institute Thesaurus | few cross-references maintained
+| kegg  | Kyoto Encyclopedia of Genes and Genomes | data not easily accessible
+| pid  | NCI Pathway Interaction Database | not maintained
+
+If you need help mapping between pathway databases, see [ComPath](https://www.nature.com/articles/s41540-018-0078-8).
+
+### Pathologies
+
+Diseases, pathologies, phenotypes, psychiatric conditions, side effects,
+and organism-level phenomena can be represented with the `pathology()` /
+`path()` function. We're aware that "pathology" is not only inappropriate,
+but also indelicate in some situations, so an update to the more general
+term "phenotype" will come with the next backwards-incompatible language
+update.
+
+For now, disease pathologies like muscle hypotonia can be represented by:
+
+```bel
 // long form
-biologicalProcess(GO:"cellular senescence")
+pathology(mesh:D009123 ! "Muscle Hypotonia")
 
 // short form
-bp(GO:"cellular senescence")
+path(mesh:D009123 ! "Muscle Hypotonia")
 ```
 
-###### Diseases and Pathologies
+In general, a pathology can be encoded like an abundance, population,
+or biological process like:
 
-Disease pathologies like muscle hypotonia can be represented by:
+```bel
+path(prefix:identifier [! name])
 ```
-// long form
-pathology(MESH:"Muscle Hypotonia")
 
-// short form
-path(MESH:"Muscle Hypotonia")
-```
+#### Recommended Nomenclatures
+
+| prefix | name |
+| ------ | ---- |
+| doid  | Disease Ontology |
+| efo  | Experimental Factor Ontology |
+| hpo  | Human Phenotype Ontology |
+| mondo  | Monarch Disease Ontology |
+| mesh | Medical Subject Headings |
+
+#### Not Recommended Nomenclatures
+
+| prefix | name | reason |
+| ------ | ---- | ------ |
+| icd9  | ICD 9 | Not maintained |
+| icd  | ICD 10 | Almost impossible to get data |
+| icd11  | ICD 11 | You didn't even know there was a version 11, did you? |
 
 ## Reified Entities
 
 ### Composites
+
+The `compositeAbundance()` / `composite()` is the BEL version of an
+`AND` statement. Like `complex()`, you can put a list of physical entities
+(or biological processes?) inside it to denote that two things have to be
+present/active at the same time.
 
 The `compositeAbundance(<abundance term list>)` function takes a list of
 abundance terms. The `compositeAbundance()` or `composite()` function is used
@@ -984,33 +1130,43 @@ interpreted as the same term. This function should not be used if any of the
 abundances alone are reported to cause the effect. `compositeAbundance()` terms
 should be used only as subjects of statements, not as objects.
 
-### Example - BEL Statement with compositeAbundance term
 
-```
+For example, IL-6 and IL-23 synergistically induce Th17 differentiation as in:
+
+```bel
 composite(p(HGNC:IL6), complex(GO:"interleukin-23 complex")) increases bp(GO:"T-helper 17 cell differentiation")
 ```
 
-In the above example, IL-6 and IL-23 synergistically induce Th17 differentiation.
+#### Example
+
+```
+// long form
+compositeAbundance(proteinAbundance(HGNC:TGFB1), proteinAbundance(HGNC:IL6))
+
+// short form
+ composite(p(HGNC:TGFB1), p(HGNC:IL6))
+```
+
 
 ### Reactions
 
-`reaction(reactants(<abundance term list1>), products(<abundance term list2>))`
-denotes the frequency or abundance of events in which members of the abundances
+The `reaction()` / `rxn()` function denotes the transformations from a set of
+abundances to another set of abundances. It is written like:
+
+```
+reaction(reactants(<abundance term list1>), products(<abundance term list2>))
+```
+
+where the frequency or abundance of events in which members of the abundances
 in `<abundance term list1>` (the reactants) are transformed into members of the
 abundances in `<abundance term list2>` (the products).
 
+For example, the reaction in which superoxides are dismutated into oxygen and
+hydrogen peroxide can be represented as:
 
-### Example
-
-The reaction in which superoxides are dismutated into oxygen and hydrogen peroxide can be represented as:
-
+```bel
+rxn(reactants(a(CHEBI:superoxide)), products(a(CHEBI:"hydrogen peroxide"), a(CHEBI: "oxygen")))
 ```
-rxn(reactants(a(CHEBI:superoxide)),products(a(CHEBI:"hydrogen peroxide"), a(CHEBI: "oxygen")))
-```
-
-###### Reactions
-
-The `reaction()` or `rxn()` function expresses the transformation of products into reactants, each defined by a list of abundances.
 
 #### Example
 
@@ -1027,175 +1183,64 @@ rxn(reactants(a(CHEBI:phophoenolpyruvate), a(CHEBI:ADP)), products(a(CHEBI:pyruv
 
 ### Fusions
 
-`fusion()` or `fus()` expressions can be used in place of a namespace value within a gene, RNA, or protein abundance function to represent a hybrid gene, or gene product formed from two previously separate genes. `fusion()` expressions take the general form:
+Fusions are when two gene, RNA, or proteins are combine. The `fusion()` /
+`fus()` functions  can be used in place of an identifier within a gene, RNA,
+or protein abundance function to represent a hybrid gene, or gene product
+formed from two previously separate genes.
 
- fus(ns5':v5', "range5'", ns3':v3', "range3'")
+The `fusion()` expressions take the general form:
 
-where `ns5':v5'` is a namespace and value for the 5' fusion partner, `range5'` is the sequence coordinates of the 5' partner, `ns3':v3'` is a namespace and value for the 3' partner, and `range3'` is the sequence coordinates for the 3' partner.  Ranges need to be in quotes.
+```bel
+fus(prefix:identifier [! name], "range5'", prefix:identifier [! name], "range3'")
+```
 
-### Example
+where the first `prefix:identifier` is for the 5-prime fusion partner,
+`range5'` is the sequence coordinates of the 5-prime partner, the second
+`prefix:identifier` is for the 3-prime partner, and `range3'` is the
+sequence coordinates for the 3' partner.  Ranges need to be in quotes.
 
-###### RNA abundance of fusion with known breakpoints
+For example, the fusion between the RNA of TMPRSS2 and ERG can
+be encoded as:
 
-r(fus(HGNC:TMPRSS2, "r.1_79", HGNC:ERG, "r.312_5034"))
+```
+r(fus(hgnc:11876 ! TMPRSS2, "r.1_79", hgnc:3446 ! ERG, "r.312_5034"))
+```
 
-The __r.__ designation in the range fields indicates that the numbering uses the RNA sequence as the reference. RNA sequence numbering starts at the transcription initiation site.  You use __c.___ for g() fusions and __p.___ for p() fusions.  These __r.__, __c.__, and __p.__ designations come from http://www.hgvs.org[HGVS variation description] convention.
+The __r.__ designation in the range fields indicates that the numbering
+uses the RNA sequence as the reference. RNA sequence numbering starts at the
+transcription initiation site.  You use __c.___ for `g()` fusions and __p.___
+for `p()` fusions.  These __r.__, __c.__, and __p.__ designations come from
+HGVS.
 
-###### RNA abundance of fusion with unspecified breakpoints
+If the breakpoints are unspecified for the 5-prime range or the
+3-prime range, the `"?"` can be used like in:
 
- r(fus(HGNC:TMPRSS2, "?", HGNC:ERG, "?"))
+```
+r(fus(hgnc:11876 ! TMPRSS2, "?", hgnc:3446 ! ERG, "?"))
+```
 
+###### Example - Fusion of Proteins
 
-###### Fusion Proteins
-
-The abundances of fusion proteins resulting from chromosomal translocation mutations can be specified by using the `fusion()` or `fus()` function within a protein abundance term.
-
-#### Example
+The abundances of fusion proteins resulting from chromosomal translocation 
+mutations can be specified by using the `fusion()` or `fus()` function within
+a protein abundance term.
 
 ```
 // long form
-p(fusion(HGNC:BCR, "p.1_426", HGNC:JAK2, "p.812_1132"))
+p(fusion(hgnc:1014 ! BCR, "p.1_426", hgnc:6192 ! JAK2, "p.812_1132"))
 
 // short form
-p(fus(HGNC:BCR, "p.1_426", HGNC:JAK2, "p.812_1132"))
+p(fus(hgnc:1014 ! BCR, "p.1_426", hgnc:6192 ! JAK2, "p.812_1132"))
 ```
 
-This term represents the abundance of a fusion protein of the 5' partner BCR and 3' partner JAK2, with the breakpoint for BCR at amino acid 426 and JAK2 at 812. _p._ indicates that the protein sequence is used for the range coordinates provided. If the breakpoint is not specified, the fusion protein abundance can be represented as:
+This term represents the abundance of a fusion protein of the 5' partner BCR
+and 3' partner JAK2, with the breakpoint for BCR at amino acid 426 and JAK2
+at 812. _p._ indicates that the protein sequence is used for the range
+coordinates provided. If the breakpoint is not specified, the fusion protein
+abundance can be represented as:
+
+##### Example - Unspecified Fusion of Proteins
 
 ```
-p(fus(HGNC:BCR, "?", HGNC:JAK2, "?"))
-```
-
-The `fusion()` function can also be used within `geneAbundance` and `rnaAbundance` terms to represent genes and RNAs modified by fusion mutations.
-
-## Examples
-
-Measurable entities like genes, RNAs, proteins, and small molecules are represented as abundances in BEL. BEL Terms for abundances have the general form `a(ns:v)`, where `a` is an abundance function, `ns` is `a` namespace reference and `v` is a value from the namespace vocabulary. See Namespaces Used in Examples.
-
-* Chemicals and Small Molecules
-* Genes, RNAs, microRNAs, and Proteins
-* Protein families
-* Complexes
-* Composite abundances
-
-###### Chemicals and Small Molecules
-
-The general abundance function `abundance()` is used to represent abundances
-of chemicals, small molecules, and any other entities that cannot be
-represented by a more specific abundance function.
-
-#### Examples
-
-###### Long Form
-
-```
-// long forms
-abundance(CHEBI:"nitrogen atom")
-abundance(CHEBI:"prostaglandin J2")
-
-// short forms
-a(CHEBI:"nitrogen atom")
-a(CHEBI:"prostaglandin J2")
-```
-
-These BEL Terms represent the abundance of the entities specified by
-_nitrogen atom_ and by _prostaglandin J2_ in the CHEBI namespace.
-
-###### Genes, RNAs, and Proteins
-
-The abundance functions `geneAbundance()`, `rnaAbundance()`, and
-`proteinAbundance()` are used with namespace values like HGNC human gene
-symbols, EntrezGene IDs, SwissProt accession numbers to designate the type of
-molecule represented.
-
-#### Examples
-
-Abundances of the gene, RNA, and protein encoded by the human AKT1 gene are
-represented as:
-
-```
-// long forms
-geneAbundance(hgnc:391 ! AKT1)
-rnaAbundance(hgnc:391 ! AKT1)
-proteinAbundance(hgnc:391 ! AKT1)
-
-// short forms
-g(hgnc:391 ! AKT1)
-r(hgnc:391 ! AKT1)
-p(hgnc:391 ! AKT1)
-```
-
-These BEL Terms represent the gene, RNA, and protein abundances of the entity
-specified by _AKT1_ in the HGNC namespace. Equivalent terms can be constructed
-using a corresponding value from a different namespace. For example, the
-abundance of the human AKT1 RNA can also be represented by referencing the
-EntrezGene ID or SwissProt accession namespaces:
-
-```
-r(NCBIGENE:207)
-r(UNIPROT:P31749)
-```
-
-###### microRNAs
-
-The abundance function `microRNAAbundance()` is used to represent the fully processed, active form of a microRNA. The specific abundance functions allow distinct representations of the gene, RNA, and microRNA abundances for a given namespace value.
-
-#### Example
-
-These BEL Terms represent the abundances of the gene, RNA, and processed microRNA, respectively, for the entity specified by _Mir21_ in the MGI mouse gene symbol namespace.
-
-```
-// long forms
-geneAbundance(MGI:Mir21)
-rnaAbundance(MGI:Mir21)
-microRNAAbundance(MGI:Mir21)
-
-// short forms
-g(MGI:Mir21)
-r(MGI:Mir21)
-m(MGI:Mir21)
-```
-
-###### Complexes
-
-The abundances of molecular complexes are represented using the `complexAbundance()` function. This function can take either a list of abundance terms or a value from a namespace of molecular complexes as its argument.
-
-#### Example
-
-Both BEL Terms represent the IkappaB kinase complex. The first by referencing
-a named protein complex within the [GO namespace](http://geneontology.org/page/cellular-component-ontology-guidelines).
-
-```
-// long form
-complexAbundance(GO:"IkappaB kinase complex")
-
-// short form
-complex(GO:"IkappaB kinase complex")
-```
-
-Define the enumerating the IkappaB kinase complex by composition of 
-its member proteins: CHUK, IKBKB, and IKBKG.
-
-```
-// long form
-complexAbundance(proteinAbundance(HGNC:CHUK), proteinAbundance(HGNC:IKBKB), proteinAbundance(HGNC:IKBKG))
-
-// short form
-complex(p(HGNC:CHUK), p(HGNC:IKBKB), p(HGNC:IKBKG))
-```
-
-###### Composite abundances
-
-Multiple abundance terms can be represented together as the subject of a BEL Statement by using the `compositeAbundance()` function. This function takes a list of abundances as its argument and is used when the individual abundances do not act alone, but rather synergize to produce an effect.
-
-#### Example
-
-This term represents the combined abundances of TGFB1 and IL6 proteins.
-
-```
-// long form
-compositeAbundance(proteinAbundance(HGNC:TGFB1), proteinAbundance(HGNC:IL6))
-
-// short form
- composite(p(HGNC:TGFB1), p(HGNC:IL6))
+p(fus(HGNC:1014 ! BCR, "?", HGNC:6192 ! JAK2, "?"))
 ```

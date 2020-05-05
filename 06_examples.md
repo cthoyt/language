@@ -345,3 +345,71 @@ The `hasComponent` relationship is used to assign individual abundances to a nam
  complex(GOCC:"checkpoint clamp complex") hasComponent p(HGNC:HUS1)
 
 The single `hasComponents` statement is equivalent to the set of three `hasComponent` statements.
+
+
+
+#### Example - Binding Interaction
+
+The `complexAbundance()` function can be used to specify molecular interactions
+between abundances. This function can take either a list of abundances that
+define a molecular complex or a namespace value that represents a molecular
+complex (e.g., many GO Cellular Component values) as an argument. These
+examples demonstrate the use of the `complexAbundance()` function to represent
+protein-protein, protein-chemical, and protein-DNA interactions.
+
+* Protein – protein interactions
+* Protein – DNA interactions
+* Protein – small molecule interactions
+
+
+#### Example - protein-protein interaction as BEL statement
+
+This statement represents that MTOR and AKT1S1 proteins physically interact.
+Note that this statement has only an object term and no subject term and
+relationship.
+
+```
+SET Citation = {"PubMed", "17277771"}
+SET Support = "Here, we identify PRAS40 (proline-rich Akt/PKB substrate 40 kDa) as a novel mTOR binding partner"
+// disambiguation PRAS40 = HGNC AKT1S1
+complex(p(hgnc:391 ! AKT1S1), p(hgnc:3942 ! MTOR))
+```
+
+#### Example - protein-protein interaction as Statement object
+
+Here, a protein-protein interaction is the object of a BEL Statement. This
+statement expresses that the MTOR and STAT3 proteins associate and that
+increases in the protein abundance of BMP4 can increase the abundance of
+the complex comprised of MTOR and STAT3.
+
+```
+SET Citation = {"PubMed", "12796477"}
+SET Support = "Upon BMP4 treatment, the serine-threonine kinase FKBP12/rapamycin-associated protein (FRAP), mammalian target of rapamycin (mTOR), associates with Stat3 and facilitates STAT activation."
+p(hgnc:1071 ! BMP4) -> complex(p(hgnc:3942 ! MTOR), p(hgnc:11364 ! STAT3))
+```
+
+###### Protein – DNA interactions
+
+#### Example - transcription factor protein binding to DNA
+
+This statement expresses that STAT3 protein binds to the CCL11 gene DNA,
+and that this association is increased by IL17A.
+
+```
+SET Citation = {"PubMed", "19265112"}
+SET Support ="IL-17A induced at 1 h a marked enrichment of STAT3- associated CCL11 promoter DNA"
+p(hgnc:5981 ! IL17A) -> complex(p(hgnc:11364 ! STAT3), g(hgnc:10610 ! CCL11))
+```
+
+###### Protein – small molecule interactions
+
+#### Example - protein binding to a small molecule
+
+This statement represents that PIP3 binds AKT1 protein.
+
+```
+SET Citation = {"PubMed", "15987444"}
+SET Support = "After PIP3 binding, Akt1 is activated"
+// disambiguation PIP3 = CHEBI 1-phosphatidyl-1D-myo-inositol 3,4,5-trisphosphate
+complex(a(CHEBI:"1-phosphatidyl-1D-myo-inositol 3,4,5-trisphosphate"), p(hgnc:391 ! AKT1))
+```
