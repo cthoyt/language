@@ -88,17 +88,17 @@ The following nomenclatures are recommended for genes:
 
 | prefix   | name | species   |
 | -------- | ---- | --------- |
-| ncbigene | NCBI Entrez Gene | all       |
-| hgnc     | HGNC | human     |
-| flybase  | FlyBase | drosophila melanogaster |
-| mgi      | Mouse Genome Informatics | mouse     |
-| rgd      | Rat Genome Database | rat       |
-| sgd      | Saccharomyces Genome Database | Saccharomyces cerevisiae (baker's yeast) |
-| pombase  | PomBase | Schizosaccharomyces pombe (fission yeast) |
-| wormbase  | WormBase | C elegans (nematode) |
-| xenbase  | XenBase | xenopus (frogs) |
-| zfin     | Zebrafish Information Network | zebrafish |
-| dbsnp    | dbSNP | human |
+| [ncbigene](https://registry.identifiers.org/registry/ncbigene) | NCBI Entrez Gene | all       |
+| [hgnc](https://registry.identifiers.org/registry/hgnc)     | HGNC | human     |
+| [fb](https://registry.identifiers.org/registry/fb)  | FlyBase | drosophila melanogaster |
+| [mgi](https://registry.identifiers.org/registry/mgi) | Mouse Genome Informatics | mouse     |
+| [rgd](https://registry.identifiers.org/registry/rgd) | Rat Genome Database | rat       |
+| [sgd](https://registry.identifiers.org/registry/sgd)      | Saccharomyces Genome Database | Saccharomyces cerevisiae (baker's yeast) |
+| [pombase](https://registry.identifiers.org/registry/pombase)  | PomBase | Schizosaccharomyces pombe (fission yeast) |
+| [wormbase](https://registry.identifiers.org/registry/wormbase)  | WormBase | C elegans (nematode) |
+| [xenbase](https://registry.identifiers.org/registry/xenbase)  | Xenbase | xenopus (frogs) |
+| [zfin](https://registry.identifiers.org/registry/zfin)     | Zebrafish Information Network | zebrafish |
+| [dbsnp](https://registry.identifiers.org/registry/dbsnp)   | dbSNP | human |
 
 Some nomenclatures are species-specific (e.g. HGNC covers human genes),
 and some cover many species (e.g. NCBI Entrez Gene xocrse many.
@@ -332,11 +332,15 @@ site and ends at the transcription termination site.
 
 The following nomenclatures are recommended for RNAs:
 
-| prefix     | species   |
-| ---------- | --------- |
-| ensembl | all |
-| rnacentral | all |
-| snornabase | all |
+| prefix     | name | species |
+| ---------- | ---- | ------- |
+| [ensembl](https://registry.identifiers.org/registry/ensembl) | Ensembl | all |
+| [rnacentral](https://registry.identifiers.org/registry/rnacentral) | RNA Central | all |
+
+#### Nt Recommended Nomenclatures
+| prefix     | reason |
+| ---------- | ------ |
+| snornabase | not maintained |
 
 ### Micro-RNAs
 
@@ -772,8 +776,8 @@ p(fplx:AKT, pmod(Ph, Ser, 473))
 
 | prefix     | name   |
 | ---------- | --------- |
-| fplx | FamPlex |
-| interpro | InterPro |
+| [fplx](https://registry.identifiers.org/registry/fplx) | FamPlex |
+| [interpro](https://registry.identifiers.org/registry/interpro) | InterPro |
 | signor | SIGNOR |
 | pro | Protein Ontology |
 
@@ -781,8 +785,8 @@ p(fplx:AKT, pmod(Ph, Ser, 473))
 
 | prefix     | reason   |
 | ---------- | --------- |
-| ncit | no mappings available to other resources |
-| mesh | no mappings available to other resources |
+| [ncit](https://registry.identifiers.org/registry/ncit) | no mappings available to other resources |
+| [mesh](https://registry.identifiers.org/registry/mesh) | no mappings available to other resources |
 | sfam | Selventa families are not maintained. Please upgrade to FamPlex (fplx) |
 
 A community maintained list of equivalences between protein families is maintained
@@ -818,8 +822,8 @@ be manually curated.
 
 | prefix     | name   |
 | ---------- | --------- |
-| prosite | ProSite |
-| interpro | InterPro |
+| [prosite](https://registry.identifiers.org/registry/prosite) | ProSite |
+| [interpro](https://registry.identifiers.org/registry/interpro) | InterPro |
 
 ### Populations
 
@@ -867,11 +871,11 @@ complex(pop(taxonomy:90371), p(hgnc:3624 ! FCN2)) increases bp(go:0006909 ! phag
 
 | prefix | name |
 | ------ | ---- |
-| taxonomy  | NCBI Taxonomy |
-| bto | Brenda Tissue Ontology |
-| cl | Cell Ontology |
+| [taxonomy](https://registry.identifiers.org/registry/taxonomy)  | NCBI Taxonomy |
+| [bto](https://registry.identifiers.org/registry/BTO) | Brenda Tissue Ontology |
+| [cl](https://registry.identifiers.org/registry/CTO) | Cell Type Ontology |
 | clo | Cell Line Ontology | 
-| efo | Experimental Factor Ontology | 
+| [efo](https://registry.identifiers.org/registry/efo) | Experimental Factor Ontology | 
 
 ### Other Physical Entities
 
@@ -916,16 +920,16 @@ Abundances do not have `variant()` modifiers like genes, RNAs, and proteins.
 
 | prefix | name |
 | ------ | ---- |
-| chebi  | Chemical Entities of Biological Interest |
-| drugbank |
-| pubchem.compound | PubChem |
-| chembl | ChEMBL | 
+| [chebi](https://registry.identifiers.org/registry/chebi)  | Chemical Entities of Biological Interest |
+| [drugbank](https://registry.identifiers.org/registry/drugbank) | DrugBank |
+| [pubchem.compound](https://registry.identifiers.org/registry/pubchem.compound) | PubChem |
+| [chembl.compound](https://registry.identifiers.org/registry/chembl.compound) | ChEMBL | 
 
 #### Not Recommended Chemical Nomenclature
 
 | prefix | name | reason |
 | ------ | ---- | ------ |
-| mesh   | Medical Subject Headings | no cross-references to other nomenclatures or structural information
+| [mesh](https://registry.identifiers.org/registry/mesh) | Medical Subject Headings | no cross-references to other nomenclatures or structural information
 | schem  | Selventa chemicals | not maintained
 
 #### Other Entity Types
@@ -1039,6 +1043,10 @@ be represented with the `biologicalProcess()` / `bp()` function.
 For example, the process of angiogenesis can be represented with:
 
 ```bel
+// long form
+biologicalProcess(go:0001525 ! angiogenesis)
+
+// short form
 bp(go:0001525 ! angiogenesis)
 ```
 
@@ -1054,18 +1062,18 @@ There are no modifiers to the `bp()` function.
 
 | prefix | name |
 | ------ | ---- |
-| go  | Gene Ontology |
-| wikipathways  | WikiPathways |
-| reactome  | Reactome |
+| [go](https://registry.identifiers.org/registry/go)  | Gene Ontology |
+| [wikipathways](https://registry.identifiers.org/registry/wikipathways)  | WikiPathways |
+| [reactome](https://registry.identifiers.org/registry/reactome)  | Reactome |
 
 #### Not Recommended Nomenclature
 
 | prefix | name | reason |
 | ------ | ---- | ------ |
-| mesh   | Medical Subject Headings | no cross-references to other nomenclatures
-| ncit  | National Cancer Institute Thesaurus | few cross-references maintained
-| kegg  | Kyoto Encyclopedia of Genes and Genomes | data not easily accessible
-| pid  | NCI Pathway Interaction Database | not maintained
+| [mesh](https://registry.identifiers.org/registry/mesh)   | Medical Subject Headings | no cross-references to other nomenclatures
+| [ncit](https://registry.identifiers.org/registry/ncit)  | National Cancer Institute Thesaurus | few cross-references maintained
+| [kegg.pathway](https://registry.identifiers.org/registry/kegg.pathway)  | Kyoto Encyclopedia of Genes and Genomes | data not easily accessible
+| [pid.pathway](https://registry.identifiers.org/registry/pid.pathway)  | NCI Pathway Interaction Database | not maintained
 
 If you need help mapping between pathway databases, see [ComPath](https://www.nature.com/articles/s41540-018-0078-8).
 
@@ -1099,19 +1107,20 @@ path(prefix:identifier [! name])
 
 | prefix | name |
 | ------ | ---- |
-| doid  | Disease Ontology |
-| efo  | Experimental Factor Ontology |
-| hpo  | Human Phenotype Ontology |
-| mondo  | Monarch Disease Ontology |
-| mesh | Medical Subject Headings |
+| [doid](https://registry.identifiers.org/registry/doid)  | Disease Ontology |
+| [efo](https://registry.identifiers.org/registry/efo)  | Experimental Factor Ontology |
+| [hpo](https://registry.identifiers.org/registry/hpo)  | Human Phenotype Ontology |
+| [mondo](https://registry.identifiers.org/registry/mondo)  | Monarch Disease Ontology |
+| [mesh](https://registry.identifiers.org/registry/mesh) | Medical Subject Headings |
 
 #### Not Recommended Nomenclatures
 
 | prefix | name | reason |
 | ------ | ---- | ------ |
 | icd9  | ICD 9 | Not maintained |
-| icd  | ICD 10 | Almost impossible to get data |
+| [icd](https://registry.identifiers.org/registry/icd)  | ICD 10 | Almost impossible to get data |
 | icd11  | ICD 11 | You didn't even know there was a version 11, did you? |
+| sdis  | Selventa Diseases | Not maintained |
 
 ## Reified Entities
 
