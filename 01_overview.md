@@ -14,6 +14,10 @@ as BEL terms, then how to combine them into relations. After, it will go over
 using annotations and finally how to group them all together in BEL Script
 with appropriate metadata.
 
+Parts of this tutorial were copied/adapted from the BEL v2.0 tutorial at
+http://openbel.org/language/version_2.0/bel_specification_version_2.0.html.
+Many thanks to Natalie Catlett and William Hayes for their contributions to
+and maintenance of that document.
 
 ## Identifiers
 

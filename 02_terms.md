@@ -45,10 +45,10 @@ The protein-coding gene [TMTC1](https://identifiers.org/hgnc:24099) can be
 encoded in BEL like:
 
 ```bel
-// long form
+# long form
 geneAbundance(hgnc:24099 ! TMTC1)
 
-// short form
+# short form
 g(hgnc:24099 ! TMTC1)
 ```
 
@@ -122,10 +122,10 @@ when missing phenylalanine 508 (__ΔF508__) misfolds and leads to cystic
 fibrosis. This genetic variant can be written in BEL as:
 
 ```bel
-// long form
+# long form
 g(hgnc:1884 ! CFTR, variant("c.1521_1523delCTT"))
 
-// short form
+# short form
 g(hgnc:1884 ! CFTR, var("c.1521_1523delCTT"))
 ```
 
@@ -189,10 +189,10 @@ For example, the methylation of the NDUFB6 gene causes a decline in its
 expression in muscles (pubmed:17948130). This can be represented with:
 
 ```bel
-// long form
+# long form
 g(hgnc:7701 ! NDUFB6, geneModification(Methylation))
 
-// short form
+# short form
 g(hgnc:7701 ! NDUFB6, gmod(Me))
 ```
 
@@ -214,11 +214,11 @@ can be referenced without a CURIE from the following table:
 These can be written as:
 
 ```
-// long form
+# long form
 gmod(Methylation)
 gmod(ADP-ribosylation)
 
-// short form
+# short form
 gmod(Me)
 gmod(ADPRib)
 ```
@@ -243,10 +243,10 @@ The long non-coding RNA [Homo sapiens MAPT antisense RNA 1 (MAPT-AS1)](https://r
 can be encoded in BEL with:
 
 ```bel
-// long form
+# long form
 rnaAbundance(rnacentral:URS000075DB76 ! MAPT-AS1)
 
-// short form
+# short form
 r(rnacentral:URS000075DB76 ! MAPT-AS1)
 ```
 
@@ -350,10 +350,10 @@ have their own function in BEL. It works exactly the same way as the `r()`
 function.
 
 ```bel
-// long form
+# long form
 microRNAAbundance(mirbase:MI0000139 ! mmu-mir-1a-1)
 
-// short form
+# short form
 m(mirbase:MI0000139 ! mmu-mir-1a-1)
 ```
 
@@ -470,10 +470,10 @@ This term represents the abundance of the human PIK3CA protein in which the
 glutamic acid residue at position 545 has been substituted with a lysine.
 
 ```
-// long form
+# long form
 p(HGNC:PIK3CA, variant("p.Glu545Lys"))
 
-// short form
+# short form
 p(HGNC:PIK3CA, var("p.Glu545Lys"))
 ```
 
@@ -500,10 +500,10 @@ codon can be specified by using the `variant("")` or `var("")` function within
 a protein abundance term.
 
 ```
-// long form
+# long form
 p(HGNC:ABCA1, variant("p.Arg1851*"))
 
-// short form
+# short form
 p(HGNC:ABCA1, var("p.Arg1851*"))
 ```
 
@@ -524,19 +524,19 @@ examples, only the `<range>` argument is used. The last examples include use of
 the optional `<descriptor>`.
 
 ```
-// fragment with known start/stop
+# fragment with known start/stop
 p(HGNC:YFG, frag("5_20"))
 
-// amino-terminal fragment of unknown length
+# amino-terminal fragment of unknown length
 p(HGNC:YFG, frag("1_?"))
 
-// carboxyl-terminal fragment of unknown length
+# carboxyl-terminal fragment of unknown length
 p(HGNC:YFG, frag("?_*"))
 
-// fragment with unknown start/stop
+# fragment with unknown start/stop
 p(HGNC:YFG, frag("?"))
 
-// fragment with unknown start/stop and a descriptor
+# fragment with unknown start/stop and a descriptor
 p(HGNC:YFG, frag("?", "55kD"))
 ```
 
@@ -548,10 +548,10 @@ modifications can be applied to the same protein abundance. For example,
 the phosphorylated Tau protein would look like this:
 
 ```bel
-// long form
+# long form
 p(uniprot:P10636, proteinModification(Phosphorylation))
 
-// short form
+# short form
 p(uniprot:P10636, pmod(Ph))
 ```
 
@@ -675,10 +675,10 @@ This term represents the abundance of human HIF1A protein
 hydroxylated at asparagine 803.
 
 ```
-// long form
+# long form
 p(hgnc:4910 ! HIF1A, proteinModification(Hy, Asn, 803))
 
-// short form
+# short form
 p(hgnc:4910 ! HIF1A, pmod(Hy, Asn, 803))
 ```
 
@@ -739,14 +739,14 @@ expressed using any of these several namespaces:
 ```bel
 p(fplx:AKT)
 
-// see: https://signor.uniroma2.it/relation_result.php?id=SIGNOR-PF24&organism=human
+# see: https://signor.uniroma2.it/relation_result.php?id=SIGNOR-PF24&organism=human
 p(signor:SIGNOR-PF24 ! AKT)
 
-// see: https://identifiers.org/ncit:C41625
-// NCIT not recommended because they do not provide mappings
+# see: https://identifiers.org/ncit:C41625
+# NCIT not recommended because they do not provide mappings
 p(ncit:C41625 ! "Protein Kinase B")
 
-// The selventa namespace is not maintained. Please do not use.
+# The selventa namespace is not maintained. Please do not use.
 p(sfam:F0014 ! "AKT Family")
 ```
 
@@ -803,7 +803,7 @@ The [Zinc finger, AN1-type](https://identifiers.org/interpro:IPR000058) can be
 expressed using the `p()` tag as in:
 
 ```bel
-// See also: https://identifiers.org/interpro:IPR000058
+# See also: https://identifiers.org/interpro:IPR000058
 p(interpro:IPR000058 ! "Zinc finger, AN1-type")
 ```
 
@@ -832,10 +832,10 @@ Cell population level changes due to environment or treatments. For example,
 a population of Streptococcus entericus can be encoded as:
 
 ```bel
-// long form
+# long form
 populationAbundance(taxonomy:1123302 ! "Streptococcus entericus DSM 14446")
 
-// short form
+# short form
 pop(taxonomy:1123302 ! "Streptococcus entericus DSM 14446")
 ```
 
@@ -884,10 +884,10 @@ Small molecules, chemicals, and drugs can be represented with the
 encoded as:
 
 ```bel
-// long form
+# long form
 abundance(chebi:58987 ! "sildenafil citrate")
 
-// short form
+# short form
 a(chebi:58987 ! "sildenafil citrate")
 ``` 
 
@@ -940,12 +940,12 @@ and small functional peptides.
 
 
 ```bel
-// cellular structure
+# cellular structure
 a(go:0022904 ! "respiratory electron transport chain")
 ```
 
 ```bel
-// aggregates of proteins
+# aggregates of proteins
 a(conso:CONSO00358 ! TDP-43 oligomers)
 ```
 
@@ -975,10 +975,10 @@ Both BEL Terms represent the IkappaB kinase complex. The first by referencing
 a named protein complex within the [GO namespace](http://geneontology.org/page/cellular-component-ontology-guidelines).
 
 ```
-// long form
+# long form
 complexAbundance(go:0008385 ! "IkappaB kinase complex")
 
-// short form
+# short form
 complex(go:0008385 ! "IkappaB kinase complex")
 ```
 
@@ -986,10 +986,10 @@ Define the enumerating the IkappaB kinase complex by composition of
 its member proteins: CHUK, IKBKB, and IKBKG.
 
 ```
-// long form
+# long form
 complexAbundance(p(hgnc:1974 ! CHUK), p(hgn:c5960 ! IKBKB), p(hgnc:5961 ! IKBKG))
 
-// short form
+# short form
 complex(p(hgnc:1974 ! CHUK), p(hgnc:5960 ! IKBKB), p(hgnc:5961 ! IKBKG))
 ```
 
@@ -1043,10 +1043,10 @@ be represented with the `biologicalProcess()` / `bp()` function.
 For example, the process of angiogenesis can be represented with:
 
 ```bel
-// long form
+# long form
 biologicalProcess(go:0001525 ! angiogenesis)
 
-// short form
+# short form
 bp(go:0001525 ! angiogenesis)
 ```
 
@@ -1089,10 +1089,10 @@ update.
 For now, disease pathologies like muscle hypotonia can be represented by:
 
 ```bel
-// long form
+# long form
 pathology(mesh:D009123 ! "Muscle Hypotonia")
 
-// short form
+# short form
 path(mesh:D009123 ! "Muscle Hypotonia")
 ```
 
@@ -1149,10 +1149,10 @@ composite(p(HGNC:IL6), complex(GO:"interleukin-23 complex")) increases bp(GO:"T-
 #### Example
 
 ```
-// long form
+# long form
 compositeAbundance(proteinAbundance(HGNC:TGFB1), proteinAbundance(HGNC:IL6))
 
-// short form
+# short form
  composite(p(HGNC:TGFB1), p(HGNC:IL6))
 ```
 
@@ -1183,10 +1183,10 @@ This BEL Term represents the reaction in which the reactants
 phosphoenolpyruvate and ADP are converted into pyruvate and ATP.
 
 ```
-// long form
+# long form
 reaction(reactants(abundance(CHEBI:phosphoenolpyruvate), abundance(CHEBI:ADP)), products(abundance(CHEBI:pyruvate), abundance(CHEBI:ATP)))
 
-// short form
+# short form
 rxn(reactants(a(CHEBI:phophoenolpyruvate), a(CHEBI:ADP)), products(a(CHEBI:pyruvate), a(CHEBI:ATP)))
 ```
 
@@ -1235,10 +1235,10 @@ mutations can be specified by using the `fusion()` or `fus()` function within
 a protein abundance term.
 
 ```
-// long form
+# long form
 p(fusion(hgnc:1014 ! BCR, "p.1_426", hgnc:6192 ! JAK2, "p.812_1132"))
 
-// short form
+# short form
 p(fus(hgnc:1014 ! BCR, "p.1_426", hgnc:6192 ! JAK2, "p.812_1132"))
 ```
 
