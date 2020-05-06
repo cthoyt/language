@@ -413,3 +413,21 @@ SET Support = "After PIP3 binding, Akt1 is activated"
 // disambiguation PIP3 = CHEBI 1-phosphatidyl-1D-myo-inositol 3,4,5-trisphosphate
 complex(a(CHEBI:"1-phosphatidyl-1D-myo-inositol 3,4,5-trisphosphate"), p(hgnc:391 ! AKT1))
 ```
+
+
+##### Causal
+
+```
+p(HGNC:CCND1) => act(p(HGNC:CDK4))
+```
+
+The abundance of the protein designated by __CCND1__ in the HGNC namespace directly increases the activity of the abundance of the protein designated by __CDK4__ in the HGNC namespace.
+
+##### Causal
+
+```
+p(HGNC:BCL2)-| bp(MESHPP:Apoptosis)
+```
+
+The abundance of the protein designated by __BCL2__ in the HGNC namespace decreases the biological process designated by __apoptosis__ in the MESHPP (phenomena and processes) namespace.
+

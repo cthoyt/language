@@ -206,7 +206,7 @@ of the epidermal growth factor receptor (EGFR) protein can be represented as:
 translocation(p(hgnc:3236 ! EGFR), fromLocation(go:0009986 ! "cell surface"), toLocaction(go:0005768 ! endosome))
 
 # Short form
-tloc(p(HGNC:EGFR), fromLoc(go:0009986 ! "cell surface"), toLoc(go:0005768 ! endosome))
+tloc(p(hgnc:3236 ! EGFR), fromLoc(go:0009986 ! "cell surface"), toLoc(go:0005768 ! endosome))
 ```
 
 In general, the `fromLoc()` and `toLoc()` functions take in an identifier:
@@ -217,7 +217,8 @@ fromLoc(prefix:identifier [! name])
 ```
 
 The most reasonable namespaces to use for locations are from the GO cellular
-components branch and maybe cell types.
+components branch and maybe cell types. MeSH also contains locations, but
+are not recommended because of lack of mappings.
 
 ### Cell Secretion
 
@@ -226,10 +227,10 @@ from the cytoplasm to the nucleus.
 
 ```
 # long form
-translocation(proteinAbundance(HGNC:NFE2L2), fromLoc(MESHCS:Cytoplasm), toLoc(MESHCS:"Cell Nucleus"))
+translocation(p(HGNC:NFE2L2), fromLoc(mesh:D003593 ! Cytoplasm), toLoc(mesh:D002467 ! "Cell Nucleus"))
 
 # short form
-tloc(p(HGNC:NFE2L2), fromLoc(MESHCL:Cytoplasm), toLoc(MESHCL:"Cell Nucleus"))
+tloc(p(HGNC:NFE2L2), fromLoc(mesh:D003593 ! Cytoplasm), toLoc(mesh:D002467 ! "Cell Nucleus"))
 ```
 
 There are also two convenience functions, `cellSurfaceExpression()` and
@@ -237,15 +238,14 @@ There are also two convenience functions, `cellSurfaceExpression()` and
 pre-defined `toLoc()` and `fromLoc()`.
 
 
-
-This term represents secretion of mouse IL6 protein.
+For example, the following represents secretion of mouse IL6 protein.
 
 ```
 # long form
-cellSecretion(proteinAbundance(MGI:Il6))
+cellSecretion(p(mgi:96559 ! Il6))
 
 # short form
-sec(p(MGI:Il6))
+sec(p(mgi:96559 ! Il6))
 ```
 
 ### Cell Surface Expression
@@ -279,10 +279,10 @@ This term represents cell surface expression of rat Fas protein.
 
 ```bel
 # long form
-cellSurfaceExpression(proteinAbundance(RGD:Fas))
+cellSurfaceExpression(p(rgd:619831 ! Fas))
 
 # short form
-surf(p(RGD:Fas))
+surf(p(rgd:619831 ! Fas))
 ```
 
 ### Degradation
@@ -308,88 +308,89 @@ the degraded entity.
 
 ```
 # long form
-degradation(rnaAbundance(HGNC:MYC))
+degradation(rnaAbundance(hgnc:7553 ! MYC))
 
 # short form
-deg(r(HGNC:MYC))
+deg(r(hgnc:7553 ! MYC))
 ```
+
+**Note** the degradation relationship is not recommended, because it's more direct
+to just use the `decreases` relationship to show that the abundance is lowered.
 
 ## Cellular Location
 
-`location()` or `loc()` can be used as an argument within any abundance
-function except `compositeAbundance()` to represent a distinct subset of the
-abundance at that location. Location subsets of abundances have the general
-form:
+Unlike the translocation process, each node can be annotated with the location
+where it is inside the cell with the `location()` / `loc()` function. It can be
+used as an argument within any abundance function except `compositeAbundance()`
+to represent a distinct subset of the abundance at that location. Location
+subsets of abundances have the general form:
 
 ```
 f(ns:v, loc(ns:v))
 ```
 
-##### Cytoplasmic pool of AKT1 protein
+The location should come following all modifications and variants.
+
+For example, the AKT protein in the cytoplasm can be encoded in BEL as:
+
+```bel
+# long form
+p(hgnc:391 ! AKT1, location(mesh:D003593 ! Cytoplasm))
+
+# short form
+p(hgnc:391 ! AKT1, loc(mesh:D003593 ! Cytoplasm))
+```
+
+While this information is written in the BEL term that is in either the
+subject or object, the fact that the entity is in a given location is
+actually metadata that is stored at the statement leve.
+
+##### Example - Endoplasmic Reticulum pool of Ca^2+^
 
 ```
-p(hgnc:391 ! AKT1, loc(MESHCS:Cytoplasm))
+a(chebi:29108 ! "calcium(2+)", loc(go:0005783 ! "endoplasmic reticulum"))
 ```
-
-##### Endoplasmic Reticulum pool of Ca^2+^
-
-```
-a(CHEBI:"calcium(2+)", loc(GO:"endoplasmic reticulum"))
-```
-
 
 ## Nested Statements
 
-BEL Terms are denoted by expressions composed of a BEL Function and a list of
-arguments. BEL v2.0 specifies a set of approximately 20 functions allowed in
-term expressions.
+While most BEL statements take the form of `<subject> <predicate> <object>`
+where the subject and object may have some of the preceding modifiers attached,
+it is also possible to use an entire BEL statement as the object. This makes
+BEL a recursively defined language
 
-The combination of a BEL function and its arguments fully specifies a BEL Term. The BEL Term expression `f(a)` denotes a BEL Term defined by function `f()` applied to an argument `a`. Wherever the same function is applied to the same arguments, the resulting BEL Term references the same biological entity.
+Nested statements should only be curated when there is clear transitivity between
+the two statements and the relationships are casual.
 
-The semantics of a BEL Term are determined by the function used in the term expression. For example, the function `proteinAbundance()` is defined such that any term expression using `proteinAbundance()` represents a class of abundance of protein. Many BEL functions take only single values as arguments, providing a structured method of using ontologies and vocabularies in BEL. For example, values in the HUGO Gene Nomenclature Committee (HGNC) vocabulary of official human gene symbols can be used to designate gene, RNA, and protein abundances. The function `proteinAbundance()` could then be applied to an HGNC gene symbol, __AKT1__ for example, to indicate the class of protein abundances produced by the AKT1 gene, producing the BEL Term `proteinAbundance(HGNC:AKT1)`.
+For example, __GATA1__ directly increases the process in which the activity of the
+ __ZBTB16__ protein directly increases the abundance of RNA designated by __MPL__.
+This can be encoded in BEL as:
 
-
-#### Example BEL Statements
-
-##### Subject Term Only
-
-```
-complex(p(HGNC:CCND1), p(HGNC:CDK4))
-```
-
-The abundance of a complex formed from protein abundances designated by __CCND1__ and __CDK4__ in the HGNC namespace. This is a subject term only statement, and indicates that the entity specified by the term has been observed.
-
-##### Causal
-
-```
-p(HGNC:CCND1) => act(p(HGNC:CDK4))
+```bel
+p(hgnc:4170 ! GATA1) => ( act(p(hgnc:12930 ! ZBTB16)) => r(hgnc:7217 ! MPL) )
 ```
 
-The abundance of the protein designated by __CCND1__ in the HGNC namespace directly increases the activity of the abundance of the protein designated by __CDK4__ in the HGNC namespace.
-
-##### Causal
-
+If you are working in a network context, nested statements in the form of
 ```
-p(HGNC:BCL2)-| bp(MESHPP:Apoptosis)
+A P1 (B P2 C)
 ```
 
-The abundance of the protein designated by __BCL2__ in the HGNC namespace decreases the biological process designated by __apoptosis__ in the MESHPP (phenomena and processes) namespace.
-
-##### Nested Statement - Object Term is Statement
+can be decomposed into
 
 ```
-p(HGNC:GATA1) => ( act(p(HGNC:ZBTB16)) => r(HGNC:MPL) )
+A P1 B
+B P2 C
+A P1 * P2 C
 ```
 
-The abundance of the protein designated by __GATA1__ in the HGNC namespace directly increases the process in which the activity of the protein abundance designated by __ZBTB16__ in the HGNC namespace directly increases the abundance of RNA designated by __MPL__ in the HGNC namespace.
+Where `P1` and `P2` are predicates, and their product `P1 * P2` is increases if
+both are increases or both are decreases. Their product `P1 * P2` is decreases
+if one is decreases and the other is increases.
 
-###### Target term is BEL statement
 
-If B is a BEL Statement, the relationship is considered direct if the subject abundance term for B physically interacts with the abundance term for A. For example, for the BEL Statement:
+Another example: the CLSPN protein is considered to directly activate the
+phosphorylation of CHEK1 protein by the kinase activity of ATR, because the
+CLSPN and ATR proteins physically interact.
 
+```bel
+p(hgnc:19715 ! CLSPN) => (act(p(hgnc:882 ! ATR), ma(kin)) => p(hgnc:1925 ! CHEK1, pmod(Ph)))
 ```
-p(HGNC:CLSPN) => (act(p(HGNC:ATR), ma(kin)) => p(HGNC:CHEK1, pmod(Ph)))
-```
-
-CLSPN protein is considered to directly activate the phosphorylation of CHEK1 protein by the kinase activity of ATR, because the CLSPN and ATR proteins physically interact.
-
