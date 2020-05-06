@@ -332,4 +332,3 @@ Another example: the CLSPN protein is considered to directly activate the phosph
 ```text
 p(hgnc:19715 ! CLSPN) => (act(p(hgnc:882 ! ATR), ma(kin)) => p(hgnc:1925 ! CHEK1, pmod(Ph)))
 ```
-

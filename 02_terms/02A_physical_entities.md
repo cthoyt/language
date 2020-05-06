@@ -1,28 +1,8 @@
----
-description: How to encode physical and abstract entities in BEL
----
-
-# Entities
-
-Throughout this tutorial, most functions have both a long and short form. For brevity, the long forms will be introduced, but thereafter the short forms will be used.
-
-Two general categories of biological entities are represented as BEL Terms: **abundances** and **processes**.
-
-### Physical Entities
-
-Life science experiments often measure the abundance of a type of thing in a given sample or set of samples. BEL Abundance Terms represent classes of abundance, the abundances of specific types of things. Examples include the **protein abundance of TP53**, the **RNA abundance of CCND1**, the **abundance of the protein AKT1 phosphorylated at serine 21**, or the **abundance of the complex of the proteins CCND1 and CDK4**.
-
-### Processes
-
-BEL Process Terms represent classes of complex phenomena taking place at the level of the cell or the organism, such as the biological process of **cell cycle** or a disease process such as **Cardiomyopathy**. In other cases, BEL Terms may represent classes of specific molecular activities, such as the kinase activity of the AKT1 protein, or a specific chemical reaction like conversion of superoxides to hydrogen peroxide and oxygen.
-
-Measurable biological parameters such as **Blood Pressure** or **Body Temperature** are represented as process BEL Terms. These BEL Terms denote biological activities that, when measured, are reduced to an output parameter.
-
-## Physical Entities
+# Physical Entities
 
 The following BEL Functions represent classes of abundances of specific types of biological entities like RNAs, proteins, post-translationally modified proteins, and small molecules. Biological experiments frequently involve the manipulation and measurement of entities in samples. These BEL functions specify the type of entity referred to by a namespace value. For example, `geneAbundance(hgnc:391 ! AKT1)`, `rnaAbundance(hgnc:391 ! AKT1)`, and `proteinAbundance(hgnc:391 ! AKT1)`, represent the abundances of the AKT1 gene, RNA, and protein, respectively.
 
-### Genes
+## Genes
 
 The protein-coding gene [TMTC1](https://identifiers.org/hgnc:24099) can be encoded in BEL like:
 
@@ -187,7 +167,7 @@ The previous example can be written with [DNA methylation \(go:0006306\)](https:
 g(hgnc:7701 ! NDUFB6, gmod(go:0006306 ! "DNA methylation"))
 ```
 
-### RNAs
+## RNAs
 
 The long non-coding RNA [Homo sapiens MAPT antisense RNA 1 \(MAPT-AS1\)](https://rnacentral.org/rna/URS000075DB76/9606) can be encoded in BEL with:
 
@@ -277,7 +257,7 @@ The following nomenclatures are recommended for RNAs:
 | :--- | :--- |
 | snornabase | not maintained |
 
-### Micro-RNAs
+## Micro-RNAs
 
 Micro-RNAs \(or, miRNAs\) are functional RNAs that regulate gene expression. Unlike other non-protein coding RNAs \(e.g. lncRNAs, sRNAs, etc.\), miRNAs have their own function in BEL. It works exactly the same way as the `r()` function.
 
@@ -313,7 +293,7 @@ The following nomenclatures are recommended for miRNAs:
 | mirbase | all |
 | mirbase.mature | all |
 
-### Proteins
+## Proteins
 
 `proteinAbundance(ns:v)` or `p(ns:v)` denotes the abundance of the protein designated by the value +v+ in the namespace +ns+, where +v+ references a gene or a named protein family.
 
@@ -603,7 +583,7 @@ p(hgnc:7553 ! MYC, pmod(Ub, Lys))
 
 #### Recommended Nomenclatures
 
-### Protein Families
+## Protein Families
 
 Families of proteins can be expressed using the `p()` function as well.
 
@@ -658,7 +638,7 @@ p(fplx:AKT, pmod(Ph, Ser, 473))
 
 A community maintained list of equivalences between protein families is maintained at [https://github.com/sorgerlab/famplex/blob/master/equivalences.csv](https://github.com/sorgerlab/famplex/blob/master/equivalences.csv). This is a useful tool for moving away from deprecated namespaces.
 
-### Protein Domains
+## Protein Domains
 
 Protein domains and functional are considered similarly to protein families in BEL because it's useful to think of groups of proteins with the same domain having the same \(putative\) molecular function \(think GO annotations\).
 
@@ -684,7 +664,7 @@ In general, these kinds of relationships can be automatically extracted from Int
 | [prosite](https://registry.identifiers.org/registry/prosite) | ProSite |
 | [interpro](https://registry.identifiers.org/registry/interpro) | InterPro |
 
-### Populations
+## Populations
 
 The `populationAbundance()` / `pop()` function allow for capturing Taxon and Cell population level changes due to environment or treatments. For example, a population of Streptococcus entericus can be encoded as:
 
@@ -733,7 +713,7 @@ complex(pop(taxonomy:90371), p(hgnc:3624 ! FCN2)) increases bp(go:0006909 ! phag
 | clo | Cell Line Ontology |
 | [efo](https://registry.identifiers.org/registry/efo) | Experimental Factor Ontology |
 
-### Other Physical Entities
+## Other Physical Entities
 
 Small molecules, chemicals, and drugs can be represented with the `abundance()` / `a()` function. For example, the drug Viagra can be encoded as:
 
@@ -798,7 +778,7 @@ a(go:0022904 ! "respiratory electron transport chain")
 a(conso:CONSO00358 ! TDP-43 oligomers)
 ```
 
-### Complexes of Physical Entities
+## Complexes of Physical Entities
 
 The `complexAbundance()` or `complex()` function can be used with either a namespace value or with a list of abundance terms.
 
@@ -860,187 +840,5 @@ complex(pop(taxonomy:5833 ! "Plasmodium falciparum"), pop(bto:0000424 ! erythroc
 
 ```text
 complex(p(hgnc:11364 ! STAT3), g(hgnc:10610 ! CCL11))
-```
-
-## Process Functions
-
-The following BEL Functions represent classes of events or phenomena taking place at the level of the cell or the organism which do not correspond to molecular abundances, but instead to a biological process like angiogenesis or a pathology like cancer.
-
-### Biological Processes
-
-Pathways, biological processes, and high-order molecular-level phenomena can be represented with the `biologicalProcess()` / `bp()` function.
-
-For example, the process of angiogenesis can be represented with:
-
-```text
-# long form
-biologicalProcess(go:0001525 ! angiogenesis)
-
-# short form
-bp(go:0001525 ! angiogenesis)
-```
-
-Likewise, the Signaling by Hippo pathway from Reactome can be represented with:
-
-```text
-bp(reactome:R-HSA-2028269 ! "Signaling by Hippo")
-```
-
-There are no modifiers to the `bp()` function.
-
-#### Recommended Nomenclatures
-
-| prefix | name |
-| :--- | :--- |
-| [go](https://registry.identifiers.org/registry/go) | Gene Ontology |
-| [wikipathways](https://registry.identifiers.org/registry/wikipathways) | WikiPathways |
-| [reactome](https://registry.identifiers.org/registry/reactome) | Reactome |
-
-#### Not Recommended Nomenclature
-
-| prefix | name | reason |
-| :--- | :--- | :--- |
-| [mesh](https://registry.identifiers.org/registry/mesh) | Medical Subject Headings | no cross-references to other nomenclatures |
-| [ncit](https://registry.identifiers.org/registry/ncit) | National Cancer Institute Thesaurus | few cross-references maintained |
-| [kegg.pathway](https://registry.identifiers.org/registry/kegg.pathway) | Kyoto Encyclopedia of Genes and Genomes | data not easily accessible |
-| [pid.pathway](https://registry.identifiers.org/registry/pid.pathway) | NCI Pathway Interaction Database | not maintained |
-
-If you need help mapping between pathway databases, see [ComPath](https://www.nature.com/articles/s41540-018-0078-8).
-
-### Pathologies
-
-Diseases, pathologies, phenotypes, psychiatric conditions, side effects, and organism-level phenomena can be represented with the `pathology()` / `path()` function. We're aware that "pathology" is not only inappropriate, but also indelicate in some situations, so an update to the more general term "phenotype" will come with the next backwards-incompatible language update.
-
-For now, disease pathologies like muscle hypotonia can be represented by:
-
-```text
-# long form
-pathology(mesh:D009123 ! "Muscle Hypotonia")
-
-# short form
-path(mesh:D009123 ! "Muscle Hypotonia")
-```
-
-In general, a pathology can be encoded like an abundance, population, or biological process like:
-
-```text
-path(prefix:identifier [! name])
-```
-
-#### Recommended Nomenclatures
-
-| prefix | name |
-| :--- | :--- |
-| [doid](https://registry.identifiers.org/registry/doid) | Disease Ontology |
-| [efo](https://registry.identifiers.org/registry/efo) | Experimental Factor Ontology |
-| [hpo](https://registry.identifiers.org/registry/hpo) | Human Phenotype Ontology |
-| [mondo](https://registry.identifiers.org/registry/mondo) | Monarch Disease Ontology |
-| [mesh](https://registry.identifiers.org/registry/mesh) | Medical Subject Headings |
-
-#### Not Recommended Nomenclatures
-
-| prefix | name | reason |
-| :--- | :--- | :--- |
-| icd9 | ICD 9 | Not maintained |
-| [icd](https://registry.identifiers.org/registry/icd) | ICD 10 | Almost impossible to get data |
-| icd11 | ICD 11 | You didn't even know there was a version 11, did you? |
-| sdis | Selventa Diseases | Not maintained |
-
-## Reified Entities
-
-### Composites
-
-The `compositeAbundance()` / `composite()` is the BEL version of an `AND` statement. Like `complex()`, you can put a list of physical entities \(or biological processes?\) inside it to denote that two things have to be present/active at the same time.
-
-The `compositeAbundance(<abundance term list>)` function takes a list of abundance terms. The `compositeAbundance()` or `composite()` function is used to represent cases where multiple abundances synergize to produce an effect. The list is unordered, thus different orderings of the arguments should be interpreted as the same term. This function should not be used if any of the abundances alone are reported to cause the effect. `compositeAbundance()` terms should be used only as subjects of statements, not as objects.
-
-For example, IL-6 and IL-23 synergistically induce Th17 differentiation as in:
-
-```text
-composite(p(HGNC:IL6), complex(GO:"interleukin-23 complex")) increases bp(GO:"T-helper 17 cell differentiation")
-```
-
-#### Example
-
-```text
-# long form
-compositeAbundance(proteinAbundance(HGNC:TGFB1), proteinAbundance(HGNC:IL6))
-
-# short form
- composite(p(HGNC:TGFB1), p(HGNC:IL6))
-```
-
-### Reactions
-
-The `reaction()` / `rxn()` function denotes the transformations from a set of abundances to another set of abundances. It is written like:
-
-```text
-reaction(reactants(<abundance term list1>), products(<abundance term list2>))
-```
-
-where the frequency or abundance of events in which members of the abundances in `<abundance term list1>` \(the reactants\) are transformed into members of the abundances in `<abundance term list2>` \(the products\).
-
-For example, the reaction in which superoxides are dismutated into oxygen and hydrogen peroxide can be represented as:
-
-```text
-rxn(reactants(a(CHEBI:superoxide)), products(a(CHEBI:"hydrogen peroxide"), a(CHEBI: "oxygen")))
-```
-
-#### Example
-
-This BEL Term represents the reaction in which the reactants phosphoenolpyruvate and ADP are converted into pyruvate and ATP.
-
-```text
-# long form
-reaction(reactants(abundance(CHEBI:phosphoenolpyruvate), abundance(CHEBI:ADP)), products(abundance(CHEBI:pyruvate), abundance(CHEBI:ATP)))
-
-# short form
-rxn(reactants(a(CHEBI:phophoenolpyruvate), a(CHEBI:ADP)), products(a(CHEBI:pyruvate), a(CHEBI:ATP)))
-```
-
-### Fusions
-
-Fusions are when two gene, RNA, or proteins are combine. The `fusion()` / `fus()` functions can be used in place of an identifier within a gene, RNA, or protein abundance function to represent a hybrid gene, or gene product formed from two previously separate genes.
-
-The `fusion()` expressions take the general form:
-
-```text
-fus(prefix:identifier [! name], "range5'", prefix:identifier [! name], "range3'")
-```
-
-where the first `prefix:identifier` is for the 5-prime fusion partner, `range5'` is the sequence coordinates of the 5-prime partner, the second `prefix:identifier` is for the 3-prime partner, and `range3'` is the sequence coordinates for the 3' partner. Ranges need to be in quotes.
-
-For example, the fusion between the RNA of TMPRSS2 and ERG can be encoded as:
-
-```text
-r(fus(hgnc:11876 ! TMPRSS2, "r.1_79", hgnc:3446 ! ERG, "r.312_5034"))
-```
-
-The **r.** designation in the range fields indicates that the numbering uses the RNA sequence as the reference. RNA sequence numbering starts at the transcription initiation site. You use **c.\_** for `g()` fusions and **p.\_** for `p()` fusions. These **r.**, **c.**, and **p.** designations come from HGVS.
-
-If the breakpoints are unspecified for the 5-prime range or the 3-prime range, the `"?"` can be used like in:
-
-```text
-r(fus(hgnc:11876 ! TMPRSS2, "?", hgnc:3446 ! ERG, "?"))
-```
-
-**Example - Fusion of Proteins**
-
-The abundances of fusion proteins resulting from chromosomal translocation mutations can be specified by using the `fusion()` or `fus()` function within a protein abundance term.
-
-```text
-# long form
-p(fusion(hgnc:1014 ! BCR, "p.1_426", hgnc:6192 ! JAK2, "p.812_1132"))
-
-# short form
-p(fus(hgnc:1014 ! BCR, "p.1_426", hgnc:6192 ! JAK2, "p.812_1132"))
-```
-
-This term represents the abundance of a fusion protein of the 5' partner BCR and 3' partner JAK2, with the breakpoint for BCR at amino acid 426 and JAK2 at 812. _p._ indicates that the protein sequence is used for the range coordinates provided. If the breakpoint is not specified, the fusion protein abundance can be represented as:
-
-**Example - Unspecified Fusion of Proteins**
-
-```text
-p(fus(HGNC:1014 ! BCR, "?", HGNC:6192 ! JAK2, "?"))
 ```
 
