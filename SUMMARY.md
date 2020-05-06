@@ -15,5 +15,4 @@
 * [Entity Modifiers](04_statements.md)
 * [Annotations](05_annotations.md)
 * [Cookbook](06_cookbook.md)
-  * [More Cookbook](07_faq/06_examples.md)
 * [Changelog](07_changelog.md)
