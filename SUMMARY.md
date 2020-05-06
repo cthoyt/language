@@ -1,12 +1,16 @@
 # Table of contents
 
-* [BEL Language Tutorial](README.md)
 * [Preamble](01_overview.md)
 * [Entities](02_terms.md)
-* [Predicates](03_relationships.md)
+* [Predicates](03_relationships/03_relationships.md)
+  * [Causal](03_relationships/03A_causal.md)
+  * [Correlative](03_relationships/03B_correlative.md)
+  * [Associative](03_relationships/03C_associative.md)
+  * [Genomic](03_relationships/03D_genomic.md)
+  * [Ontological](03_relationships/03E_ontological.md)
+  * [Deprecated](03_relationships/03F_deprecated.md)
 * [Entity Modifiers](04_statements.md)
 * [Annotations](05_annotations.md)
-* [Cookbook](07_faq/06_cookbook.md)
+* [Cookbook](06_cookbook.md)
   * [More Cookbook](07_faq/06_examples.md)
 * [Changelog](07_changelog.md)
-
