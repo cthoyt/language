@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Preamble](01_overview.md)
+* [Preamble](README.md)
 * [Entities](02_terms.md)
 * [Predicates](03_relationships/03_relationships.md)
   * [Causal](03_relationships/03A_causal.md)
