@@ -5,6 +5,7 @@
 3. [Relationships](03_relationships.md)
 4. [Statements](04_statements.md)
 5. [Annotations](05_annotations.md)
-6. [Examples](06_examples.md)
-7. [FAQ](07_faq.md)
+6. [Examples](07_faq/06_examples.md)
+7. [FAQ](07_faq/)
 8. [Changelog](08_changelog.md)
+
