@@ -40,7 +40,7 @@ You can also encode the binding event between a gene and its transcription facto
 complex(g(hgnc:24099 ! TMTC1), p(hgnc:3819 ! FOXO1))
 ```
 
-More information about complexes can be found [below](02_terms.md#complexes-of-physical-entities).
+More information about complexes can be found [below](index.md#complexes-of-physical-entities).
 
 #### Recommended Nomenclatures
 
@@ -179,7 +179,7 @@ rnaAbundance(rnacentral:URS000075DB76 ! MAPT-AS1)
 r(rnacentral:URS000075DB76 ! MAPT-AS1)
 ```
 
-In general, any RNA type can be encoded using the form, with the exception of [miRNAs](02_terms.md#micro-rnas), which have their own function:
+In general, any RNA type can be encoded using the form, with the exception of [miRNAs](index.md#micro-rnas), which have their own function:
 
 ```text
 r(prefix:identifier [! name])

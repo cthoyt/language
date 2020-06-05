@@ -2,7 +2,7 @@
 
 The following BEL Functions represent classes of events or phenomena taking place at the level of the cell or the organism which do not correspond to molecular abundances, but instead to a biological process like angiogenesis or a pathology like cancer.
 
-### Biological Processes
+### Biological Processes and Pathways
 
 Pathways, biological processes, and high-order molecular-level phenomena can be represented with the `biologicalProcess()` / `bp()` function.
 
@@ -43,7 +43,7 @@ There are no modifiers to the `bp()` function.
 
 If you need help mapping between pathway databases, see [ComPath](https://www.nature.com/articles/s41540-018-0078-8).
 
-### Pathologies
+### Phenotypes and Pathologies
 
 Diseases, pathologies, phenotypes, psychiatric conditions, side effects, and organism-level phenomena can be represented with the `pathology()` / `path()` function. We're aware that "pathology" is not only inappropriate, but also indelicate in some situations, so an update to the more general term "phenotype" will come with the next backwards-incompatible language update.
 
