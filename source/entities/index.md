@@ -18,5 +18,7 @@ BEL Process Terms represent classes of complex phenomena taking place at the lev
 
 Measurable biological parameters such as **Blood Pressure** or **Body Temperature** are represented as process BEL Terms. These BEL Terms denote biological activities that, when measured, are reduced to an output parameter.
 
-### Refiied Entities
+### Reified Entities
 
+BEL also allows for some kinds of entities to be defined based on other types, such as transient
+complexes, chemical reactions, and composites (the logical AND operator in BEL).
